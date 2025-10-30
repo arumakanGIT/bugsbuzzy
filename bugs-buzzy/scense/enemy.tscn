@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://c2cuc3o0i6ifh"]
+[gd_scene load_steps=16 format=3 uid="uid://bj5fka0dnbl4g"]
 
 [ext_resource type="Script" uid="uid://bdekeu8xyl4ig" path="res://script/Enemy.cs" id="1_wrjwy"]
 [ext_resource type="Texture2D" uid="uid://cuytt5u7lgh4k" path="res://Asset/AroWalk.png" id="3_k1o7x"]
@@ -84,7 +84,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_1ynuh")
 }],
 "loop": true,
-"name": &"new_animation",
+"name": &"walk",
 "speed": 12.0
 }]
 
@@ -102,9 +102,8 @@ script = ExtResource("1_wrjwy")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.2, 0.2)
 sprite_frames = SubResource("SpriteFrames_hb8ge")
-animation = &"new_animation"
-autoplay = "new_animation"
-frame_progress = 0.9215967
+animation = &"walk"
+autoplay = "walk"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(2, 8)
