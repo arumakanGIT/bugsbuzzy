@@ -3,6 +3,7 @@ using System;
 
 public partial class player : CharacterBody2D
 {
+
     [Export] public float Speed = 300.0f;
     [Export] public float JumpVelocity = -250.0f;
     [Export] public float WallJumpHorizontalVelocity = 300.0f;
@@ -149,123 +150,123 @@ public partial class player : CharacterBody2D
 
     private void Jump(double delta)
     {
-  
-        if (!IsOnFloor())
-        {
+
+		if (!IsOnFloor())
+		{
  
-            if (IsOnWall() && velocity.Y > 0)
-            {
-                velocity.Y = Mathf.Min(velocity.Y, WallSlideSpeed);
-               // animator.Play("wall_slide"); 
-            }
-            else
-            {
-                velocity += GetGravity() * (float)delta;
-            }
-        }
+			if (IsOnWall() && velocity.Y > 0)
+			{
+				velocity.Y = Mathf.Min(velocity.Y, WallSlideSpeed);
+			   // animator.Play("wall_slide"); 
+			}
+			else
+			{
+				velocity += GetGravity() * (float)delta;
+			}
+		}
 
-        if (Input.IsActionJustPressed("ui_accept"))
-        {
-            if (IsOnFloor())
-            {
-                jumpCounter++;
-                velocity.Y = JumpVelocity;
-            }
-            else if (IsOnWall())
-            {
-              
-                int wallDir = GetWallNormal().X > 0 ? 1 : -1;
+		if (Input.IsActionJustPressed("ui_accept"))
+		{
+			if (IsOnFloor())
+			{
+				jumpCounter++;
+				velocity.Y = JumpVelocity;
+			}
+			else if (IsOnWall())
+			{
+			  
+				int wallDir = GetWallNormal().X > 0 ? 1 : -1;
 
-                velocity.Y = JumpVelocity;
-                velocity.X = wallDir * WallJumpHorizontalVelocity;
+				velocity.Y = JumpVelocity;
+				velocity.X = wallDir * WallJumpHorizontalVelocity;
 
-                jumpCounter = 1;
+				jumpCounter = 1;
 
-                wallJumpLockTimer = WallJumpLockDuration;
-            }
-        }
+				wallJumpLockTimer = WallJumpLockDuration;
+			}
+		}
 
-        if (IsOnFloor())
-        {
-            jumpCounter = 0;
-        }
-    }
+		if (IsOnFloor())
+		{
+			jumpCounter = 0;
+		}
+	}
 
-    private void HandleAnimation()
-    {
-        if (velocity.Y > 0)
-        {
-            animator.Play("fall");
-        }
-        else if (velocity.Y < 0)
-        {
-            animator.Play("jump");
-        }
-        else if (IsOnFloor() )
-        {
-            if (isMoving)
-            {
-                animator.Play("walk");
-            }
-            else
-            {
-                animator.Play("idle"); 
-            }
-            
-        }
+	private void HandleAnimation()
+	{
+		if (velocity.Y > 0)
+		{
+			animator.Play("fall");
+		}
+		else if (velocity.Y < 0)
+		{
+			animator.Play("jump");
+		}
+		else if (IsOnFloor() )
+		{
+			if (isMoving)
+			{
+				animator.Play("walk");
+			}
+			else
+			{
+				animator.Play("idle"); 
+			}
+			
+		}
 
-        if (velocity.X > 0)
-            animator.FlipH = false;
-        else if (velocity.X < 0)
-            animator.FlipH = true;
-        
-        if (swordHitbox != null)
-        {
-      
-            float offsetX = 150f; 
-            swordHitbox.Position = new Vector2(animator.FlipH ? -offsetX : offsetX, swordHitbox.Position.Y);
-        }
-    }
-    private async void StartMeleeAttack()
-    {
-        GD.Print("attack started");
-        isAttacking = true;
-       // animator.Play("attack"); 
-        swordHitbox.Monitoring = true;
+		if (velocity.X > 0)
+			animator.FlipH = false;
+		else if (velocity.X < 0)
+			animator.FlipH = true;
+		
+		if (swordHitbox != null)
+		{
+	  
+			float offsetX = 150f; 
+			swordHitbox.Position = new Vector2(animator.FlipH ? -offsetX : offsetX, swordHitbox.Position.Y);
+		}
+	}
+	private async void StartMeleeAttack()
+	{
+		GD.Print("attack started");
+		isAttacking = true;
+	   // animator.Play("attack"); 
+		swordHitbox.Monitoring = true;
 
-        await ToSignal(GetTree().CreateTimer(0.3f), "timeout");
+		await ToSignal(GetTree().CreateTimer(0.3f), "timeout");
 
-        swordHitbox.Monitoring = false;
-        isAttacking = false;
-    }
+		swordHitbox.Monitoring = false;
+		isAttacking = false;
+	}
 
-    private void OnSwordHit(Node body)
-    {
-        
-            if (body.HasMethod("TakeDamage"))
-            {
-                body.Call("TakeDamage", SwordDamage);
-            }
-        
-    }
-    private void ShootProjectile()
-    {
-        if (ProjectileScene == null) return;
+	private void OnSwordHit(Node body)
+	{
+		
+			if (body.HasMethod("TakeDamage"))
+			{
+				body.Call("TakeDamage", SwordDamage);
+			}
+		
+	}
+	private void ShootProjectile()
+	{
+		if (ProjectileScene == null) return;
 
-        var projectile = (Projectile)ProjectileScene.Instantiate();
+		var projectile = (Projectile)ProjectileScene.Instantiate();
 
-        Vector2 mousePos = GetGlobalMousePosition();
+		Vector2 mousePos = GetGlobalMousePosition();
 
-        Vector2 dir = (mousePos - GlobalPosition).Normalized();
+		Vector2 dir = (mousePos - GlobalPosition).Normalized();
 
-        projectile.GlobalPosition = GlobalPosition + dir * 20;
+		projectile.GlobalPosition = GlobalPosition + dir * 20;
 
-        projectile.SetDirection(dir);
+		projectile.SetDirection(dir);
 
-        GetTree().CurrentScene.AddChild(projectile);
+		GetTree().CurrentScene.AddChild(projectile);
 
-        // animator.Play("shoot");
-    }
+		// animator.Play("shoot");
+	}
 
     public void takeCoins()
     {
