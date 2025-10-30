@@ -21,30 +21,38 @@ public partial class Enemy : CharacterBody2D
 
 	public override void _PhysicsProcess(double delta)
 	{
-		// Set velocity first (Velocity is in px/sec for CharacterBody2D).
-		Velocity = new Vector2(Speed * direction, Velocity.Y);
+		// fast local copy and cast to float once
+		float dt = (float)delta;
+		float moveAmount = Speed * direction;
 
-		// Apply movement
+		// Update velocity (units per second). CharacterBody2D.MoveAndSlide uses this in physics.
+		Velocity = new Vector2(moveAmount, Velocity.Y);
+
+		// Move — keep using MoveAndSlide for sliding behavior
 		MoveAndSlide();
 
-		// Optionally clamp position when we've passed the target to avoid jitter.
-		if ((direction == 1 && GlobalPosition.X >= targetX) ||
-			(direction == -1 && GlobalPosition.X <= targetX))
+		// ---------- improved endpoint check (prevents overshoot jitter) ----------
+		// compute distance left to target on X
+		float distToTarget = GlobalPosition.X - targetX; // positive if past target
+		// If moving right (dir==1) and we're within one step of reaching target, snap and reverse.
+		// Using Mathf.Abs avoids extra branching.
+		float step = Mathf.Abs(moveAmount * dt); // how far we'd move this frame (approx)
+		if (Mathf.Abs(distToTarget) <= step)
 		{
-			// Snap to exact target X to avoid overshoot and jitter
+			// snap to target exactly once then reverse
 			GlobalPosition = new Vector2(targetX, GlobalPosition.Y);
 
-			// Flip direction and compute next target
+			// flip direction and calculate next target (no jitter next frames)
 			direction *= -1;
 			targetX = startPosition.X + direction * PatrolRange;
 		}
 
-		// Flip the sprite by property (safer than using Set)
+		// Flip sprite if present (only set when it actually changes to avoid extra property writes)
 		if (animator != null)
-			animator.FlipH = direction < 0;
-			
-		
+		{
+			bool flip = direction < 0;
+			if (animator.FlipH != flip)
+				animator.FlipH = flip;
+		}
 	}
-	
-	
 }
