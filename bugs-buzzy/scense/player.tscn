@@ -3,8 +3,6 @@
 [ext_resource type="Script" uid="uid://cg7jlhkbterjq" path="res://script/Player.cs" id="1_7qrku"]
 [ext_resource type="Texture2D" uid="uid://d4irhm32u8vql" path="res://Asset/AroWalk.png" id="2_kc2or"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kc2or"]
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_rtp1y"]
 atlas = ExtResource("2_kc2or")
 region = Rect2(0, 0, 811, 1551)
@@ -83,12 +81,18 @@ animations = [{
 "speed": 12.0
 }]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kc2or"]
+radius = 41.0
+height = 294.0
+
 [node name="player" type="CharacterBody2D"]
 script = ExtResource("1_7qrku")
 
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.2, 0.2)
+sprite_frames = SubResource("SpriteFrames_kdpvm")
+autoplay = "default"
+frame_progress = 0.35653254
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_kc2or")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_kdpvm")
-frame_progress = 0.85828316
