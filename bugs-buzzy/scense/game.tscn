@@ -153,7 +153,6 @@ position = Vector2(230, 34)
 
 [node name="CharacterBody2D" parent="." instance=ExtResource("1_ftc5l")]
 scale = Vector2(0.2, 0.2)
-ProjectileScene = null
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_k8jf3")
