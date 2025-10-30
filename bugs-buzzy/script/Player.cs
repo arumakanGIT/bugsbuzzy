@@ -10,7 +10,7 @@ public partial class player : CharacterBody2D
     private bool isMoving = false;
     private Vector2 velocity;
     private int jumpCounter = 0;
-    private 
+
 
     public override void _Ready()
     {
