@@ -1,24 +1,37 @@
 using Godot;
 using System;
 
-public partial class coin : Area2D
+public partial class Coin : Area2D
 {
+    private AnimatedSprite2D sprite;
+    private AudioStreamPlayer2D pickupSound;
 
-	private CollisionShape2D collider;
-	BodyEnteredEventHandler bodyEntered;
-	BodyExitedEventHandler bodyExited;
-	public override void _Ready()
-	{
-		collider = GetNode<CollisionShape2D>("CollisionShape2D");
-		Connect("body_entered", new Callable(this , nameof(BodyEntered)));
-	}
+    public override void _Ready()
+    {
     
-	public override void _Process(double delta)
-	{
-		
-	}
+        sprite = GetNodeOrNull<AnimatedSprite2D>("AnimatedSprite2D");
+        pickupSound = GetNodeOrNull<AudioStreamPlayer2D>("AudioStreamPlayer2D");
+
+  
+        Connect("body_entered", new Callable(this, nameof(OnBodyEntered)));
+    }
+
+    private void OnBodyEntered(Node body)
+    {
     
-   
-    
-	
+        if (body.IsInGroup("player"))
+        {
+            GD.Print("Coin picked up!");
+
+        
+            if (pickupSound != null)
+                pickupSound.Play();
+
+            if (sprite != null)
+                sprite.Play("pickup");
+
+
+            QueueFree();
+        }
+    }
 }
