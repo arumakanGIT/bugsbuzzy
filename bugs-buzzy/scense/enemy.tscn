@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://c2cuc3o0i6ifh"]
+[gd_scene load_steps=16 format=3 uid="uid://cy76ab10tqslg"]
 
 [ext_resource type="Script" uid="uid://bdekeu8xyl4ig" path="res://script/Enemy.cs" id="1_wrjwy"]
 [ext_resource type="Texture2D" uid="uid://cuytt5u7lgh4k" path="res://Asset/AroWalk.png" id="3_k1o7x"]
@@ -107,5 +107,5 @@ autoplay = "new_animation"
 frame_progress = 0.9215967
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(2, 8)
+position = Vector2(-5, 20)
 shape = SubResource("CapsuleShape2D_e1ltt")
