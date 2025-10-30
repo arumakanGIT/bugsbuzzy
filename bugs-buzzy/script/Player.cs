@@ -25,6 +25,7 @@ public partial class Player : CharacterBody2D
 
 		if (Input.IsActionJustPressed("ui_accept") && IsOnFloor())
 		{
+			
 			velocity.Y = JumpVelocity;
 		}
 
@@ -44,6 +45,13 @@ public partial class Player : CharacterBody2D
 			velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
 		}
 
+		 if(velocity .Y > 0)
+		{
+			animator.Play("fall");
+		}else if (velocity.Y < 0)
+		 {
+			 animator.Play("jump");
+		 }
 		if (velocity.X > 0)
 		{
 			animator.FlipH = false;
@@ -52,6 +60,8 @@ public partial class Player : CharacterBody2D
 		{
 			animator.FlipH = true;
 		}
+
+		
 
 		Velocity = velocity;
 		MoveAndSlide();
