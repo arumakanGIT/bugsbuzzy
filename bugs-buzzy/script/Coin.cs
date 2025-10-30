@@ -11,7 +11,10 @@ public partial class Coin : Area2D
 
 		foreach (var body in overlappingBodies)
 		{
-			GD.Print("coin picked up");
+			if (body.HasMethod("takeCoins"))
+			{ 
+				body.Call("takeCoins");
+			}
 			QueueFree();
 		}
 	}

@@ -10,6 +10,15 @@ public partial class player : CharacterBody2D
     [Export] public float WallJumpLockDuration = 0.2f; 
     [Export] public PackedScene ProjectileScene; 
     [Export] public int SwordDamage = 25;
+    [Export] public float DashSpeed = 800f;   
+    [Export] public float DashDuration = 0.2f; 
+    [Export] public float DashCooldown = 0.5f; 
+
+    private bool isDashing = false;
+    private float dashTimer = 0f;
+    private float dashCooldownTimer = 0f;
+    private Vector2 dashDirection = Vector2.Zero;
+
     
     private AnimatedSprite2D animator;
     private Vector2 velocity;
@@ -17,16 +26,26 @@ public partial class player : CharacterBody2D
     private int jumpCounter = 0;
     private float wallJumpLockTimer = 0f; 
     public int Health = 100;
+    [Export] public int MaxHealth = 100;
+    private float healTimer = 0f;
+    private const float healInterval = 0.5f;
     private Area2D swordHitbox;
     private bool isAttacking = false;
+    private int soul = 0;
+    
+    private Ui ui;
+
     public void TakeDamage(int damage)
     {
-        Health -= damage;
-        GD.Print("Player took " + damage + " damage! Health = " + Health);
-
-        if (Health <= 0)
+        if (!isDashing)
         {
-            Die();
+            Health -= damage;
+            GD.Print("Player took " + damage + " damage! Health = " + Health);
+            ui?.UpdateHP(Health);
+            if (Health <= 0)
+            {
+                Die();
+            }
         }
     }
 
@@ -51,6 +70,13 @@ public partial class player : CharacterBody2D
         swordHitbox = GetNode<Area2D>("SwordHitbox");
         swordHitbox.Monitoring = false;
         swordHitbox.BodyEntered += OnSwordHit;
+        ui = GetTree().CurrentScene.GetNodeOrNull<Ui>("UI");
+        if (ui != null)
+        {
+            ui.UpdateHP(Health);
+            ui.UpdateSoul(soul);
+        }
+
     }
 
     public override void _PhysicsProcess(double delta)
@@ -64,9 +90,25 @@ public partial class player : CharacterBody2D
         Jump(delta);
         HandleAnimation();
         HandleInput();
+        HandleHealing(delta);
+
+        if (dashCooldownTimer > 0)
+            dashCooldownTimer -= (float)delta;
+
+        if (isDashing)
+        {
+            dashTimer -= (float)delta;
+            velocity = dashDirection * DashSpeed;
+
+            if (dashTimer <= 0)
+            {
+                isDashing = false;
+            }
+        }
 
         Velocity = velocity;
         MoveAndSlide();
+        
     }
     private void HandleInput()
     {
@@ -79,6 +121,11 @@ public partial class player : CharacterBody2D
         {
             ShootProjectile();
         }
+        if (Input.IsActionJustPressed("dash"))
+        {
+            StartDash();
+        }
+
     }
 
     private void HandleMovement()
@@ -218,6 +265,59 @@ public partial class player : CharacterBody2D
         GetTree().CurrentScene.AddChild(projectile);
 
         // animator.Play("shoot");
+    }
+
+    public void takeCoins()
+    {
+        soul += 10;
+        ui?.UpdateSoul(soul);
+    }
+
+    private void HandleHealing(double delta)
+    {
+        if (Input.IsActionPressed("heal")) 
+        {
+            healTimer -= (float)delta;
+            if (healTimer <= 0f)
+            {
+                int healAmount = soul / 2; 
+                if (healAmount > 0)
+                {
+                    Health += healAmount;
+                    if (Health > MaxHealth)
+                        Health = MaxHealth;
+
+                    soul -= healAmount * 2; 
+                    GD.Print($"Healed {healAmount} HP. Current HP: {Health}, Souls left: {soul}");
+                }
+
+                healTimer = healInterval;
+            }
+        }
+        else
+        {
+            healTimer = 0f; 
+        }
+    }
+    private void StartDash()
+    {
+        if (dashCooldownTimer > 0 || isDashing) return;
+
+        isDashing = true;
+        dashTimer = DashDuration;
+        dashCooldownTimer = DashCooldown;
+
+        
+        Vector2 inputDir = Input.GetVector("moveLeft", "moveRight", "moveForward", "moveBackward");
+        if (inputDir == Vector2.Zero)
+        {
+            
+            inputDir = new Vector2(animator.FlipH ? -1 : 1, 0);
+        }
+
+        dashDirection = inputDir.Normalized();
+
+        GD.Print("Dash started!");
     }
 
 
