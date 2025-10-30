@@ -1,6 +1,6 @@
 [gd_scene load_steps=17 format=3 uid="uid://xp6i3wwvrq2m"]
 
-[ext_resource type="Script" uid="uid://b66c0ws5qt102" path="res://script/Coin.cs" id="1_j02g0"]
+[ext_resource type="Script" uid="uid://bqmctpd0guyj8" path="res://script/Coin.cs" id="1_j02g0"]
 [ext_resource type="Texture2D" uid="uid://bped01tsjeycn" path="res://Asset/sprites/coin.png" id="2_j02g0"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_j02g0"]
@@ -107,4 +107,4 @@ shape = SubResource("CircleShape2D_j02g0")
 sprite_frames = SubResource("SpriteFrames_mpnsm")
 animation = &"pickup"
 autoplay = "pickup"
-frame_progress = 0.33728614
+frame_progress = 0.5884611

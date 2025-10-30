@@ -202,9 +202,10 @@ radius = 41.0
 height = 306.0
 
 [node name="player" type="CharacterBody2D"]
+disable_mode = 2
 script = ExtResource("1_7qrku")
-Speed = 300.0
-JumpVelocity = -350.0
+Speed = 200.0
+JumpVelocity = -250.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.2, 0.2)

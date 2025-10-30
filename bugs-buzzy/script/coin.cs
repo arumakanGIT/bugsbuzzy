@@ -3,6 +3,7 @@ using System;
 
 public partial class Coin : Area2D
 {
+	
 	public override void _PhysicsProcess(double delta)
 	{
   
