@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://xp6i3wwvrq2m" path="res://scense/coin.tscn" id="3_wc2y1"]
 [ext_resource type="PackedScene" uid="uid://bj5fka0dnbl4g" path="res://scense/enemy.tscn" id="4_5ct0j"]
 [ext_resource type="Texture2D" uid="uid://d0q2g65ahgok" path="res://Asset/sprites/world_tileset.png" id="4_w8bpv"]
-[ext_resource type="PackedScene" uid="uid://r0j7chy8tc2q" path="res://scense/enemy_2.tscn" id="5_1rj7w"]
+[ext_resource type="PackedScene" path="res://scense/enemy_2.tscn" id="5_1rj7w"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xadiw"]
 texture = ExtResource("4_w8bpv")
