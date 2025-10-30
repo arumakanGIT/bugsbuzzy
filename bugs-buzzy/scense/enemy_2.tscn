@@ -84,7 +84,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_iqmi8")
 }],
 "loop": true,
-"name": &"default",
+"name": &"walk",
 "speed": 12.0
 }]
 
@@ -100,7 +100,8 @@ script = ExtResource("1_kkrmb")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_07a7t")
-autoplay = "default"
+animation = &"walk"
+autoplay = "walk"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 59.999992)

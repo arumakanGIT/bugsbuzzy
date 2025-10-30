@@ -27,7 +27,7 @@ public partial class Enemy2 : CharacterBody2D
 		startPosition = GlobalPosition;
 		targetX = startPosition.X + PatrolRange;
 		animator = GetNodeOrNull<AnimatedSprite2D>("AnimatedSprite2D");
-		animator?.Play("walk");
+		//animator?.Play("walk");
 
 		// safer player lookup: find first node in group "Player"
 		var players = GetTree().GetNodesInGroup("Player");

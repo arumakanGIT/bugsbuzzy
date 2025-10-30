@@ -118,7 +118,7 @@ public partial class Enemy3 : CharacterBody2D
 		Vector2 desired = new Vector2(targetSpeed, Velocity.Y);
 		Velocity = Velocity.Lerp(desired, 12.0f * dt);
 
-		animator?.Play("walk");
+		//animator?.Play("walk");
 	}
 
 	private void DoChase(float dt)
@@ -142,7 +142,7 @@ public partial class Enemy3 : CharacterBody2D
 		Vector2 desired = new Vector2(desiredX, Velocity.Y);
 		Velocity = Velocity.Lerp(desired, 8.0f * dt);
 
-		animator?.Play("run");
+		//animator?.Play("run");
 	}
 
 	private void StartDash()
@@ -151,7 +151,7 @@ public partial class Enemy3 : CharacterBody2D
 		dashTimer = DashDuration;
 		dashCooldownTimer = DashCooldown;
 		Velocity = new Vector2(direction * DashSpeed, 0);
-		animator?.Play("dash");
+		//animator?.Play("dash");
 	}
 
 	private void DoDash(float dt)
