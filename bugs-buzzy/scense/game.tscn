@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://r0j7chy8tc2q" path="res://scense/enemy_2.tscn" id="5_1rj7w"]
 [ext_resource type="PackedScene" uid="uid://dvuxqwo2taugh" path="res://scense/enemy_3.tscn" id="6_1rj7w"]
 
-
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xadiw"]
 texture = ExtResource("4_w8bpv")
 0:0/0 = 0
@@ -154,6 +153,7 @@ position = Vector2(230, 34)
 
 [node name="CharacterBody2D" parent="." instance=ExtResource("1_ftc5l")]
 scale = Vector2(0.2, 0.2)
+ProjectileScene = null
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_k8jf3")
@@ -165,3 +165,6 @@ position = Vector2(406.00003, 40.000004)
 scale = Vector2(0.05, 0.05)
 
 [node name="enemy3" parent="." groups=["Enemies"] instance=ExtResource("6_1rj7w")]
+position = Vector2(-51.999996, -127.99999)
+collision_layer = 2
+collision_mask = 2
