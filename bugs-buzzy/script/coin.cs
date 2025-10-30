@@ -3,34 +3,14 @@ using System;
 
 public partial class Coin : Area2D
 {
-    private AnimatedSprite2D sprite;
-    private AudioStreamPlayer2D pickupSound;
-
-    public override void _Ready()
+    public override void _PhysicsProcess(double delta)
     {
-    
-        sprite = GetNodeOrNull<AnimatedSprite2D>("AnimatedSprite2D");
-        pickupSound = GetNodeOrNull<AudioStreamPlayer2D>("AudioStreamPlayer2D");
-
   
-        Connect("body_entered", new Callable(this, nameof(OnBodyEntered)));
-    }
+        var overlappingBodies = GetOverlappingBodies();
 
-    private void OnBodyEntered(Node body)
-    {
-    
-        if (body.IsInGroup("player"))
+        foreach (var body in overlappingBodies)
         {
-            GD.Print("Coin picked up!");
-
-        
-            if (pickupSound != null)
-                pickupSound.Play();
-
-            if (sprite != null)
-                sprite.Play("pickup");
-
-
+            GD.Print("coin picked up");
             QueueFree();
         }
     }
