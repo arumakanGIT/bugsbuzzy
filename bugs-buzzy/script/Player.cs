@@ -6,15 +6,19 @@ public partial class Player : CharacterBody2D
 	  [Export] public float Speed = 600.0f;
 	  [Export] public float JumpVelocity = -500.0f;
 	  [Export] public float wallJumpHorizantalVelocity = 200.0f;
+	  [Export] public int maxSoul = 100;
+	  private int soul;
 	  private AnimatedSprite2D animator;
 	  private bool isMoving = false;
 	  private Vector2 velocity;
 	  private int jumpCounter = 0;
-    private bool isWallJumping = false;
+	  private bool isWallJumping = false;
+	  
 
 	  public override void _Ready()
 	  {
 		 animator = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+		 soul = maxSoul;
 	  }
 
 	  public override void _PhysicsProcess(double delta)
@@ -54,10 +58,19 @@ public partial class Player : CharacterBody2D
     private void jump(double delta)
     {
   
-        if (!IsOnFloor())
+        if (!IsOnFloor() )
         {
-            velocity += GetGravity() * (float)delta;
+	        if (!IsOnWall())
+	        {
+		        velocity += GetGravity() * (float)delta; 
+	        }
+	        else if(IsOnWall() && velocity.Y <= 0)
+	        {
+		        velocity += (GetGravity()/2) * (float)delta;  
+	        }
+            
         }
+        
 
   
         if (Input.IsActionJustPressed("ui_accept"))
@@ -65,6 +78,7 @@ public partial class Player : CharacterBody2D
            
             if (IsOnFloor())
             {
+	           
                 jumpCounter++;
                 velocity.Y = JumpVelocity;
             }
@@ -73,7 +87,6 @@ public partial class Player : CharacterBody2D
             {
                 isWallJumping = true;
                 int wallDir = GetWallNormal().X > 0 ? 1 : -1;
-
                 velocity.Y = JumpVelocity;
                 velocity.X = wallDir * wallJumpHorizantalVelocity;
 
@@ -107,5 +120,10 @@ public partial class Player : CharacterBody2D
 		{
 			animator.FlipH = true;
 		}
+	}
+
+	public void takeDame(float damage)
+	{
+		
 	}
 }
