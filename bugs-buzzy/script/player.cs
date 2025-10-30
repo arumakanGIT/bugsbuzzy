@@ -166,20 +166,24 @@ public partial class player : CharacterBody2D
             }
             
         }
-        else if (IsOnFloor() )
-        {
-           
-        }
 
         if (velocity.X > 0)
             animator.FlipH = false;
         else if (velocity.X < 0)
             animator.FlipH = true;
+        
+        if (swordHitbox != null)
+        {
+      
+            float offsetX = 150f; 
+            swordHitbox.Position = new Vector2(animator.FlipH ? -offsetX : offsetX, swordHitbox.Position.Y);
+        }
     }
     private async void StartMeleeAttack()
     {
+        GD.Print("attack started");
         isAttacking = true;
-        animator.Play("attack"); 
+       // animator.Play("attack"); 
         swordHitbox.Monitoring = true;
 
         await ToSignal(GetTree().CreateTimer(0.3f), "timeout");
@@ -190,14 +194,12 @@ public partial class player : CharacterBody2D
 
     private void OnSwordHit(Node body)
     {
-        if (body.IsInGroup("Enemy"))
-        {
- 
+        
             if (body.HasMethod("TakeDamage"))
             {
                 body.Call("TakeDamage", SwordDamage);
             }
-        }
+        
     }
     private void ShootProjectile()
     {
