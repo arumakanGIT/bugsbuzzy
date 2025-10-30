@@ -1,3 +1,16 @@
-[gd_scene format=3 uid="uid://bj3xdncx54sar"]
+[gd_scene load_steps=4 format=3 uid="uid://bj3xdncx54sar"]
+
+[ext_resource type="PackedScene" uid="uid://62javfbvhsfd" path="res://scense/player.tscn" id="1_ftc5l"]
+[ext_resource type="PackedScene" uid="uid://xp6i3wwvrq2m" path="res://scense/coin.tscn" id="3_wc2y1"]
+[ext_resource type="PackedScene" uid="uid://bj5fka0dnbl4g" path="res://scense/enemy.tscn" id="4_5ct0j"]
 
 [node name="game" type="Node2D"]
+
+[node name="enemy" parent="." instance=ExtResource("4_5ct0j")]
+position = Vector2(132.99998, 7.9999995)
+
+[node name="Area2D" parent="." instance=ExtResource("3_wc2y1")]
+position = Vector2(230, 34)
+
+[node name="CharacterBody2D" parent="." instance=ExtResource("1_ftc5l")]
+scale = Vector2(0.2, 0.2)

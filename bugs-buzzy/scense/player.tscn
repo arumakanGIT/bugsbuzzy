@@ -215,4 +215,4 @@ autoplay = "idle"
 frame_progress = 0.19750835
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(2, 2)
+scale = Vector2(0.2, 0.2)
