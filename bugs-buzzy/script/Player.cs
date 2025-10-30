@@ -30,7 +30,16 @@ public partial class player : CharacterBody2D
     private void Die()
     {
         GD.Print("Player is dead!");
-        QueueFree(); 
+
+
+        GetTree().CreateTimer(0.5f).Timeout += () =>
+        {
+            GetTree().ReloadCurrentScene();
+        };
+
+        Hide(); 
+        SetProcess(false);
+        SetPhysicsProcess(false);
     }
 
     public override void _Ready()
