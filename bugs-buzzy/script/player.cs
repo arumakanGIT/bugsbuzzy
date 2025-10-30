@@ -8,14 +8,17 @@ public partial class player : CharacterBody2D
     [Export] public float WallJumpHorizontalVelocity = 300.0f;
     [Export] public float WallSlideSpeed = 50.0f;
     [Export] public float WallJumpLockDuration = 0.2f; 
-
+    [Export] public PackedScene ProjectileScene; 
+    [Export] public int SwordDamage = 25;
+    
     private AnimatedSprite2D animator;
     private Vector2 velocity;
     private bool isMoving = false;
     private int jumpCounter = 0;
     private float wallJumpLockTimer = 0f; 
     public int Health = 100;
-
+    private Area2D swordHitbox;
+    private bool isAttacking = false;
     public void TakeDamage(int damage)
     {
         Health -= damage;
@@ -45,6 +48,9 @@ public partial class player : CharacterBody2D
     public override void _Ready()
     {
         animator = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+        swordHitbox = GetNode<Area2D>("SwordHitbox");
+        swordHitbox.Monitoring = false;
+        swordHitbox.BodyEntered += OnSwordHit;
     }
 
     public override void _PhysicsProcess(double delta)
@@ -57,9 +63,22 @@ public partial class player : CharacterBody2D
         HandleMovement();
         Jump(delta);
         HandleAnimation();
+        HandleInput();
 
         Velocity = velocity;
         MoveAndSlide();
+    }
+    private void HandleInput()
+    {
+        if (Input.IsActionJustPressed("attack_melee") && !isAttacking)
+        {
+            StartMeleeAttack();
+        }
+
+        if (Input.IsActionJustPressed("attack_ranged"))
+        {
+            ShootProjectile();
+        }
     }
 
     private void HandleMovement()
@@ -157,4 +176,47 @@ public partial class player : CharacterBody2D
         else if (velocity.X < 0)
             animator.FlipH = true;
     }
+    private async void StartMeleeAttack()
+    {
+        isAttacking = true;
+        animator.Play("attack"); 
+        swordHitbox.Monitoring = true;
+
+        await ToSignal(GetTree().CreateTimer(0.3f), "timeout");
+
+        swordHitbox.Monitoring = false;
+        isAttacking = false;
+    }
+
+    private void OnSwordHit(Node body)
+    {
+        if (body.IsInGroup("Enemy"))
+        {
+ 
+            if (body.HasMethod("TakeDamage"))
+            {
+                body.Call("TakeDamage", SwordDamage);
+            }
+        }
+    }
+    private void ShootProjectile()
+    {
+        if (ProjectileScene == null) return;
+
+        var projectile = (Projectile)ProjectileScene.Instantiate();
+
+        Vector2 mousePos = GetGlobalMousePosition();
+
+        Vector2 dir = (mousePos - GlobalPosition).Normalized();
+
+        projectile.GlobalPosition = GlobalPosition + dir * 20;
+
+        projectile.SetDirection(dir);
+
+        GetTree().CurrentScene.AddChild(projectile);
+
+        // animator.Play("shoot");
+    }
+
+
 }

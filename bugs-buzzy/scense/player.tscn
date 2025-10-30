@@ -1,9 +1,10 @@
-[gd_scene load_steps=32 format=3 uid="uid://62javfbvhsfd"]
+[gd_scene load_steps=34 format=3 uid="uid://62javfbvhsfd"]
 
 [ext_resource type="Script" uid="uid://cv0m365i5vlnx" path="res://script/player.cs" id="1_qc060"]
 [ext_resource type="Texture2D" uid="uid://d6yvidvfy3f1" path="res://Asset/AroFall.png" id="2_fat8n"]
 [ext_resource type="Texture2D" uid="uid://cuytt5u7lgh4k" path="res://Asset/AroWalk.png" id="2_kc2or"]
 [ext_resource type="Texture2D" uid="uid://nw627p5joojr" path="res://Asset/AroIdle.png" id="2_rtp1y"]
+[ext_resource type="PackedScene" uid="uid://6ypqytpth5b0" path="res://scense/projectile.tscn" id="2_xxvyq"]
 [ext_resource type="Texture2D" uid="uid://4p65a7xg3126" path="res://Asset/AroJump.png" id="4_xxvyq"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fat8n"]
@@ -201,8 +202,12 @@ animations = [{
 "speed": 11.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fat8n"]
+size = Vector2(247, 286)
+
 [node name="CharacterBody2D" type="CharacterBody2D" groups=["Player"]]
 script = ExtResource("1_qc060")
+ProjectileScene = ExtResource("2_xxvyq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_fat8n")
@@ -216,3 +221,9 @@ frame_progress = 0.19750835
 
 [node name="Camera2D" type="Camera2D" parent="."]
 scale = Vector2(0.2, 0.2)
+
+[node name="SwordHitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SwordHitbox"]
+position = Vector2(0.5, 5)
+shape = SubResource("RectangleShape2D_fat8n")
