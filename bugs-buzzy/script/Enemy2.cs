@@ -6,15 +6,12 @@ using System.Collections.Generic;
 public partial class Enemy2 : CharacterBody2D
 {
 	[Export] public float Speed = 100.0f;
-	[Export] public float PatrolRange = 50.0f;
 
-	// detection radii: chase when player is <= ChaseRadius, return to patrol when > LoseRadius
-	[Export] public float ChaseRadius = 150.0f;
-	[Export] public float LoseRadius = 200.0f; // must be >= ChaseRadius for hysteresis
+
 
 	private Vector2 startPosition;
-	private float targetX;
-	private int patrolDirection = 1;
+	private float targetY;
+	private int direction = 1;
 
 	private AnimatedSprite2D animator;
 	private CharacterBody2D playerNode;
@@ -24,6 +21,11 @@ public partial class Enemy2 : CharacterBody2D
 
 	public override void _Ready()
 	{
+		movement = 	direction * Speed;
+		Velocity = new Vector(Velocity.y,movement);
+		moveAndSlide();	
+		
+		
 		startPosition = GlobalPosition;
 		targetX = startPosition.X + PatrolRange;
 		animator = GetNodeOrNull<AnimatedSprite2D>("AnimatedSprite2D");

@@ -1,0 +1,58 @@
+[gd_scene load_steps=9 format=3 uid="uid://dvuxqwo2taugh"]
+
+[ext_resource type="Script" uid="uid://c17l0alcdu8se" path="res://script/Enemy3.cs" id="1_livw7"]
+[ext_resource type="Texture2D" uid="uid://nw627p5joojr" path="res://Asset/AroIdle.png" id="2_ncejk"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_en1jt"]
+atlas = ExtResource("2_ncejk")
+region = Rect2(0, 0, 833, 1539)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ose0c"]
+atlas = ExtResource("2_ncejk")
+region = Rect2(833, 0, 833, 1539)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4lqmx"]
+atlas = ExtResource("2_ncejk")
+region = Rect2(1666, 0, 833, 1539)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yf0cf"]
+atlas = ExtResource("2_ncejk")
+region = Rect2(2499, 0, 833, 1539)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hyotx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_en1jt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ose0c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4lqmx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yf0cf")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 12.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_niaiu"]
+radius = 239.99994
+height = 1559.9999
+
+[node name="enemy3" type="CharacterBody2D"]
+scale = Vector2(0.05, 0.05)
+script = ExtResource("1_livw7")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-7.6293945e-06, 0)
+sprite_frames = SubResource("SpriteFrames_hyotx")
+animation = &"fly"
+autoplay = "fly"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(3.0517578e-05, 1.5258789e-05)
+shape = SubResource("CapsuleShape2D_niaiu")

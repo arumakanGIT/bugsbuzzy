@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://bj3xdncx54sar"]
+[gd_scene load_steps=9 format=3 uid="uid://bj3xdncx54sar"]
 
 [ext_resource type="PackedScene" uid="uid://62javfbvhsfd" path="res://scense/player.tscn" id="1_ftc5l"]
 [ext_resource type="PackedScene" uid="uid://xp6i3wwvrq2m" path="res://scense/coin.tscn" id="3_wc2y1"]
 [ext_resource type="PackedScene" uid="uid://bj5fka0dnbl4g" path="res://scense/enemy.tscn" id="4_5ct0j"]
 [ext_resource type="Texture2D" uid="uid://d0q2g65ahgok" path="res://Asset/sprites/world_tileset.png" id="4_w8bpv"]
 [ext_resource type="PackedScene" uid="uid://r0j7chy8tc2q" path="res://scense/enemy_2.tscn" id="5_1rj7w"]
+[ext_resource type="PackedScene" uid="uid://dvuxqwo2taugh" path="res://scense/enemy_3.tscn" id="6_1rj7w"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xadiw"]
 texture = ExtResource("4_w8bpv")
@@ -161,5 +162,5 @@ layer_0/tile_data = PackedInt32Array(196601, 3, 0, 262137, 3, 0, 327673, 3, 0, 3
 [node name="enemy2" parent="." groups=["Enemies"] instance=ExtResource("5_1rj7w")]
 position = Vector2(406.00003, 40.000004)
 scale = Vector2(0.05, 0.05)
-collision_layer = 2
-collision_mask = 2
+
+[node name="enemy3" parent="." groups=["Enemies"] instance=ExtResource("6_1rj7w")]
