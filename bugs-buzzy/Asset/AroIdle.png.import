@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cuytt5u7lgh4k"
-path="res://.godot/imported/AroWalk.png-b709ce24e8994cefd7b1d4d37c142b18.ctex"
+uid="uid://nw627p5joojr"
+path="res://.godot/imported/AroIdle.png-0ab3ae8629484e2e498148e42738cef1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Asset/AroWalk.png"
-dest_files=["res://.godot/imported/AroWalk.png-b709ce24e8994cefd7b1d4d37c142b18.ctex"]
+source_file="res://Asset/AroIdle.png"
+dest_files=["res://.godot/imported/AroIdle.png-0ab3ae8629484e2e498148e42738cef1.ctex"]
 
 [params]
 
