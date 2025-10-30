@@ -199,17 +199,19 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kc2or"]
 radius = 41.0
-height = 294.0
+height = 306.0
 
 [node name="player" type="CharacterBody2D"]
 script = ExtResource("1_7qrku")
+Speed = 300.0
+JumpVelocity = -350.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.2, 0.2)
 sprite_frames = SubResource("SpriteFrames_kdpvm")
-animation = &"walk"
+animation = &"idle"
 autoplay = "idle"
-frame_progress = 0.32193902
+frame_progress = 0.59354496
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_kc2or")
