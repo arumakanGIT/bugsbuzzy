@@ -12,6 +12,7 @@ public partial class Player : CharacterBody2D
 	  private bool isMoving = false;
 	  private Vector2 velocity;
 	  private int jumpCounter = 0;
+
 	  private bool isWallJumping = false;
 	  
 
@@ -38,72 +39,73 @@ public partial class Player : CharacterBody2D
 	private void handleMovment()
 	{
 		Vector2 direction = Input.GetVector("moveLeft", "moveRight", "moveForward", "moveBackward");
-        if (isWallJumping != true)
+		if (isWallJumping != true)
 		{
-            if (direction != Vector2.Zero)
-            {
-                isMoving = true;
-                velocity.X = direction.X * Speed;
-                animator.Play("walk");
-            }
-            else
-            {
-                animator.Play("idle");
-                velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
-            }
-        }
-            
+			if (direction != Vector2.Zero)
+			{
+				isMoving = true;
+				velocity.X = direction.X * Speed;
+				animator.Play("walk");
+			}
+			else
+			{
+				animator.Play("idle");
+				velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
+			}
+		}
+			
 
 	}
-    private void jump(double delta)
-    {
+	private void jump(double delta)
+	{
   
-        if (!IsOnFloor() )
-        {
-	        if (!IsOnWall())
-	        {
-		        velocity += GetGravity() * (float)delta; 
-	        }
-	        else if(IsOnWall() && velocity.Y <= 0)
-	        {
-		        velocity += (GetGravity()/2) * (float)delta;  
-	        }
-            
-        }
-        
+
+		if (!IsOnFloor() )
+		{
+			if (!IsOnWall())
+			{
+				velocity += GetGravity() * (float)delta; 
+			}
+			else if(IsOnWall() && velocity.Y <= 0)
+			{
+				velocity += (GetGravity()/2) * (float)delta;  
+			}
+			
+		}
+		
 
   
-        if (Input.IsActionJustPressed("ui_accept"))
-        {
-           
-            if (IsOnFloor())
-            {
-	           
-                jumpCounter++;
-                velocity.Y = JumpVelocity;
-            }
-         
-            else if (IsOnWall())
-            {
-                isWallJumping = true;
-                int wallDir = GetWallNormal().X > 0 ? 1 : -1;
-                velocity.Y = JumpVelocity;
-                velocity.X = wallDir * wallJumpHorizantalVelocity;
+		if (Input.IsActionJustPressed("ui_accept"))
+		{
+		   
+			if (IsOnFloor())
+			{
+			   
+				jumpCounter++;
+				velocity.Y = JumpVelocity;
+			}
+		 
+			else if (IsOnWall())
+			{
+				isWallJumping = true;
+				int wallDir = GetWallNormal().X > 0 ? 1 : -1;
+				velocity.Y = JumpVelocity;
+				velocity.X = wallDir * wallJumpHorizantalVelocity;
 
-             
-                jumpCounter = 1;
-            }
-        }
+			 
+				jumpCounter = 1;
+			}
+		}
 
-        if (IsOnFloor())
-        {
-            isWallJumping = false;
-            jumpCounter = 0;
-        }
-    }
+		if (IsOnFloor())
+		{
+			isWallJumping = false;
+			jumpCounter = 0;
+		}
+	}
 
 
-    private void handleAnimation( )
+	private void handleAnimation( )
 	{
 		if(velocity .Y > 0)
 		{
