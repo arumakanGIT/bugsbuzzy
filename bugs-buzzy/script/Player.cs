@@ -1,16 +1,19 @@
 using Godot;
-
+using System;
 
 public partial class player : CharacterBody2D
 {
     [Export] public float Speed = 300.0f;
     [Export] public float JumpVelocity = -250.0f;
-    [Export] public float wallJumpHorizantalVelocity = 300.0f;
-    private AnimatedSprite2D animator;
-    private bool isMoving = false;
-    private Vector2 velocity;
-    private int jumpCounter = 0;
+    [Export] public float WallJumpHorizontalVelocity = 300.0f;
+    [Export] public float WallSlideSpeed = 50.0f;
+    [Export] public float WallJumpLockDuration = 0.2f; 
 
+    private AnimatedSprite2D animator;
+    private Vector2 velocity;
+    private bool isMoving = false;
+    private int jumpCounter = 0;
+    private float wallJumpLockTimer = 0f; 
 
     public override void _Ready()
     {
@@ -21,58 +24,71 @@ public partial class player : CharacterBody2D
     {
         velocity = Velocity;
 
-		
-		
-        handleMovment();
-        jump(delta);
-        handleAnimation();
+        if (wallJumpLockTimer > 0)
+            wallJumpLockTimer -= (float)delta;
+
+        HandleMovement();
+        Jump(delta);
+        HandleAnimation();
 
         Velocity = velocity;
         MoveAndSlide();
     }
 
-    private void handleMovment()
+    private void HandleMovement()
     {
+
+        if (wallJumpLockTimer > 0)
+            return;
+
         Vector2 direction = Input.GetVector("moveLeft", "moveRight", "moveForward", "moveBackward");
         if (direction != Vector2.Zero)
         {
             isMoving = true;
             velocity.X = direction.X * Speed;
-            animator.Play("walk");
         }
         else
         {
-            animator.Play("idle");
+            isMoving = false;
             velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
         }
-
     }
-    private void jump(double delta)
-    {
 
+    private void Jump(double delta)
+    {
+  
         if (!IsOnFloor())
         {
-            velocity += GetGravity() * (float)delta;
+ 
+            if (IsOnWall() && velocity.Y > 0)
+            {
+                velocity.Y = Mathf.Min(velocity.Y, WallSlideSpeed);
+               // animator.Play("wall_slide"); 
+            }
+            else
+            {
+                velocity += GetGravity() * (float)delta;
+            }
         }
 
         if (Input.IsActionJustPressed("ui_accept"))
         {
-
             if (IsOnFloor())
             {
                 jumpCounter++;
                 velocity.Y = JumpVelocity;
             }
-
             else if (IsOnWall())
             {
-
+              
                 int wallDir = GetWallNormal().X > 0 ? 1 : -1;
 
                 velocity.Y = JumpVelocity;
-                velocity.X = wallDir * wallJumpHorizantalVelocity;
+                velocity.X = wallDir * WallJumpHorizontalVelocity;
 
                 jumpCounter = 1;
+
+                wallJumpLockTimer = WallJumpLockDuration;
             }
         }
 
@@ -82,24 +98,36 @@ public partial class player : CharacterBody2D
         }
     }
 
-
-    private void handleAnimation( )
+    private void HandleAnimation()
     {
-        if(velocity .Y > 0)
+        if (velocity.Y > 0)
         {
             animator.Play("fall");
-        }else if (velocity.Y < 0)
+        }
+        else if (velocity.Y < 0)
         {
             animator.Play("jump");
         }
+        else if (IsOnFloor() )
+        {
+            if (isMoving)
+            {
+                animator.Play("walk");
+            }
+            else
+            {
+                animator.Play("idle"); 
+            }
+            
+        }
+        else if (IsOnFloor() )
+        {
+           
+        }
+
         if (velocity.X > 0)
-        {
             animator.FlipH = false;
-        }
-        else if(velocity.X < 0)
-        {
+        else if (velocity.X < 0)
             animator.FlipH = true;
-        }
     }
 }
-

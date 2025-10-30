@@ -208,7 +208,7 @@ script = ExtResource("1_qc060")
 shape = SubResource("CapsuleShape2D_fat8n")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(0.25, 0.25)
+scale = Vector2(0.2, 0.2)
 sprite_frames = SubResource("SpriteFrames_gt2uv")
 animation = &"fall"
 autoplay = "idle"
