@@ -20,7 +20,6 @@ public partial class Enemy : CharacterBody2D
 		targetX = startPosition.X + PatrolRange;
 		animator = GetNodeOrNull<AnimatedSprite2D>("AnimatedSprite2D");
 
-		// گرفتن Area2D
 		hitBox = GetNode<Area2D>("HitBox");
 		hitBox.BodyEntered += OnHitBoxBodyEntered;
 
