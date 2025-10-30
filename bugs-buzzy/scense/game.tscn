@@ -168,6 +168,10 @@ sources/3 = SubResource("TileSetAtlasSource_wc2y1")
 
 [node name="player" parent="." instance=ExtResource("1_ftc5l")]
 position = Vector2(46, 248)
+scale = Vector2(0.25, 0.25)
+
+[node name="Camera2D" type="Camera2D" parent="player"]
+position = Vector2(-9, 10)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 constant_linear_velocity = Vector2(0, -10)
@@ -175,9 +179,6 @@ constant_linear_velocity = Vector2(0, -10)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(2, 48)
 shape = SubResource("WorldBoundaryShape2D_ftc5l")
-
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(244, 613)
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_5ct0j")
