@@ -1,9 +1,9 @@
 [gd_scene load_steps=8 format=3 uid="uid://dii4s4h7wysgh"]
 
-[ext_resource type="PackedScene" uid="uid://cx7eshstmeiwj" path="res://scense/player.tscn" id="1_ftc5l"]
+[ext_resource type="PackedScene" uid="uid://62javfbvhsfd" path="res://scense/player.tscn" id="1_ftc5l"]
 [ext_resource type="Texture2D" uid="uid://d0q2g65ahgok" path="res://Asset/sprites/world_tileset.png" id="2_1woba"]
 [ext_resource type="PackedScene" uid="uid://xp6i3wwvrq2m" path="res://scense/coin.tscn" id="3_wc2y1"]
-[ext_resource type="PackedScene" path="res://scense/enemy.tscn" id="4_5ct0j"]
+[ext_resource type="PackedScene" uid="uid://bj5fka0dnbl4g" path="res://scense/enemy.tscn" id="4_5ct0j"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ftc5l"]
 distance = -854.0
@@ -168,17 +168,6 @@ sources/3 = SubResource("TileSetAtlasSource_wc2y1")
 
 [node name="game" type="Node2D"]
 
-[node name="player" parent="." instance=ExtResource("1_ftc5l")]
-z_index = 5
-position = Vector2(46, 248)
-scale = Vector2(0.25, 0.25)
-Speed = 600.0
-JumpVelocity = -500.0
-
-[node name="Camera2D" type="Camera2D" parent="player"]
-position = Vector2(-9, 10)
-zoom = Vector2(1.5, 1.5)
-
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 constant_linear_velocity = Vector2(0, -10)
 
@@ -194,6 +183,11 @@ layer_0/tile_data = PackedInt32Array(-1048586, 3, 9, -983050, 3, 9, -917514, 3, 
 
 [node name="enemy" parent="." instance=ExtResource("4_5ct0j")]
 position = Vector2(-80, 361)
+PatrolRange = 250.0
 
 [node name="Area2D" parent="." instance=ExtResource("3_wc2y1")]
 position = Vector2(-127, 354)
+
+[node name="CharacterBody2D" parent="." instance=ExtResource("1_ftc5l")]
+position = Vector2(87, 168)
+scale = Vector2(0.2, 0.2)

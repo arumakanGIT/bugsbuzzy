@@ -3,56 +3,53 @@ using System;
 
 public partial class Enemy : CharacterBody2D
 {
-	[Export] public float Speed = 100.0f;
-	[Export] public float PatrolRange = 50.0f;
+    [Export] public float Speed = 100.0f; 
+    [Export] public float PatrolRange = 500.0f; 
 
-	private Vector2 startPosition;
-	private float targetX;
-	private int direction = 1;
-	private AnimatedSprite2D animator;
+    private Vector2 startPosition;  
+    private float targetX;  
+    private int direction = 1;                    
+    private AnimatedSprite2D animator;
 
-	public override void _Ready()
-	{
-		startPosition = GlobalPosition;
-		targetX = startPosition.X + PatrolRange;
-		animator = GetNodeOrNull<AnimatedSprite2D>("AnimatedSprite2D");
-		animator?.Play("walk");
-	}
+    public override void _Ready()
+    {
+        startPosition = GlobalPosition;
+        targetX = startPosition.X + PatrolRange;
+        animator = GetNodeOrNull<AnimatedSprite2D>("AnimatedSprite2D");
 
-	public override void _PhysicsProcess(double delta)
-	{
-		// fast local copy and cast to float once
-		float dt = (float)delta;
-		float moveAmount = Speed * direction;
+        if (animator != null)
+            animator.Play("walk");
+    }
 
-		// Update velocity (units per second). CharacterBody2D.MoveAndSlide uses this in physics.
-		Velocity = new Vector2(moveAmount, Velocity.Y);
+    public override void _PhysicsProcess(double delta)
+    {
+        float dt = (float)delta;
+        float moveAmount = Speed * direction;
 
-		// Move — keep using MoveAndSlide for sliding behavior
-		MoveAndSlide();
+        Velocity = new Vector2(moveAmount, Velocity.Y);
+        MoveAndSlide();
 
-		// ---------- improved endpoint check (prevents overshoot jitter) ----------
-		// compute distance left to target on X
-		float distToTarget = GlobalPosition.X - targetX; // positive if past target
-		// If moving right (dir==1) and we're within one step of reaching target, snap and reverse.
-		// Using Mathf.Abs avoids extra branching.
-		float step = Mathf.Abs(moveAmount * dt); // how far we'd move this frame (approx)
-		if (Mathf.Abs(distToTarget) <= step)
-		{
-			// snap to target exactly once then reverse
-			GlobalPosition = new Vector2(targetX, GlobalPosition.Y);
+  
+        if (IsOnWall())
+        {
+            direction *= -1;
+            targetX = startPosition.X + direction * PatrolRange;
+        }
 
-			// flip direction and calculate next target (no jitter next frames)
-			direction *= -1;
-			targetX = startPosition.X + direction * PatrolRange;
-		}
+   
+        float distanceFromStart = GlobalPosition.X - startPosition.X;
+        if (Mathf.Abs(distanceFromStart) >= PatrolRange)
+        {
+            direction *= -1;
 
-		// Flip sprite if present (only set when it actually changes to avoid extra property writes)
-		if (animator != null)
-		{
-			bool flip = direction < 0;
-			if (animator.FlipH != flip)
-				animator.FlipH = flip;
-		}
-	}
+            float clampedX = startPosition.X + Mathf.Clamp(distanceFromStart, -PatrolRange, PatrolRange);
+            GlobalPosition = new Vector2(clampedX, GlobalPosition.Y);
+            targetX = startPosition.X + direction * PatrolRange;
+        }
+
+        if (animator != null)
+        {
+            animator.FlipH = direction < 0;
+        }
+    }
 }
