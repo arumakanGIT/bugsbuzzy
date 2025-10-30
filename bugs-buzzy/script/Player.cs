@@ -60,37 +60,37 @@ public partial class Player : CharacterBody2D
 	{
   
 
-        if (!IsOnFloor() )
-        {
-	        if (!IsOnWall())
-	        {
-		        velocity += GetGravity() * (float)delta; 
-	        }
-	        else if(IsOnWall() && velocity.Y <= 0)
-	        {
-		        velocity += (GetGravity()/2) * (float)delta;  
-	        }
-            
-        }
-        
+		if (!IsOnFloor() )
+		{
+			if (!IsOnWall())
+			{
+				velocity += GetGravity() * (float)delta; 
+			}
+			else if(IsOnWall() && velocity.Y <= 0)
+			{
+				velocity += (GetGravity()/2) * (float)delta;  
+			}
+			
+		}
+		
 
   
-        if (Input.IsActionJustPressed("ui_accept"))
-        {
-           
-            if (IsOnFloor())
-            {
-	           
-                jumpCounter++;
-                velocity.Y = JumpVelocity;
-            }
-         
-            else if (IsOnWall())
-            {
-                isWallJumping = true;
-                int wallDir = GetWallNormal().X > 0 ? 1 : -1;
-                velocity.Y = JumpVelocity;
-                velocity.X = wallDir * wallJumpHorizantalVelocity;
+		if (Input.IsActionJustPressed("ui_accept"))
+		{
+		   
+			if (IsOnFloor())
+			{
+			   
+				jumpCounter++;
+				velocity.Y = JumpVelocity;
+			}
+		 
+			else if (IsOnWall())
+			{
+				isWallJumping = true;
+				int wallDir = GetWallNormal().X > 0 ? 1 : -1;
+				velocity.Y = JumpVelocity;
+				velocity.X = wallDir * wallJumpHorizantalVelocity;
 
 			 
 				jumpCounter = 1;

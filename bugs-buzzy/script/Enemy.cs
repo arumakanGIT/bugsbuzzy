@@ -42,5 +42,9 @@ public partial class Enemy : CharacterBody2D
 		// Flip the sprite by property (safer than using Set)
 		if (animator != null)
 			animator.FlipH = direction < 0;
+			
+		
 	}
+	
+	
 }
