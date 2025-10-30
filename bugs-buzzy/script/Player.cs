@@ -14,6 +14,24 @@ public partial class player : CharacterBody2D
     private bool isMoving = false;
     private int jumpCounter = 0;
     private float wallJumpLockTimer = 0f; 
+    public int Health = 100;
+
+    public void TakeDamage(int damage)
+    {
+        Health -= damage;
+        GD.Print("Player took " + damage + " damage! Health = " + Health);
+
+        if (Health <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        GD.Print("Player is dead!");
+        QueueFree(); 
+    }
 
     public override void _Ready()
     {
