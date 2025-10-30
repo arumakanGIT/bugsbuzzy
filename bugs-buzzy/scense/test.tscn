@@ -1,7 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://ckcpw8xw5g8sk"]
+[gd_scene load_steps=4 format=3 uid="uid://ckcpw8xw5g8sk"]
 
 [ext_resource type="PackedScene" uid="uid://62javfbvhsfd" path="res://scense/player.tscn" id="1_g8onx"]
-[ext_resource type="PackedScene" path="res://scense/projectile.tscn" id="2_1bl4o"]
 [ext_resource type="PackedScene" uid="uid://bj5fka0dnbl4g" path="res://scense/enemy.tscn" id="3_q0s8q"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_1bl4o"]
@@ -16,7 +15,6 @@ shape = SubResource("WorldBoundaryShape2D_1bl4o")
 [node name="CharacterBody2D" parent="." instance=ExtResource("1_g8onx")]
 position = Vector2(0, -51.000015)
 scale = Vector2(0.2, 0.2)
-ProjectileScene = ExtResource("2_1bl4o")
 
-[node name="enemy" parent="." instance=ExtResource("3_q0s8q")]
-position = Vector2(169, -49.000015)
+[node name="enemy" parent="." groups=["Enemy"] instance=ExtResource("3_q0s8q")]
+position = Vector2(204, -42)
