@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://62javfbvhsfd"]
+[gd_scene load_steps=28 format=3 uid="uid://62javfbvhsfd"]
 
 [ext_resource type="Script" uid="uid://cv0m365i5vlnx" path="res://script/player.cs" id="1_qc060"]
 [ext_resource type="PackedScene" uid="uid://6ypqytpth5b0" path="res://scense/projectile.tscn" id="2_xxvyq"]
@@ -23,28 +23,16 @@
 [ext_resource type="Texture2D" uid="uid://dnyr314ka03xq" path="res://Asset/asset/Walk/8.png" id="21_id7es"]
 [ext_resource type="Texture2D" uid="uid://cgrn73xjm5ljg" path="res://Asset/asset/Walk/9.png" id="22_bknj1"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_0e08v"]
+atlas = ExtResource("16_58nmf")
+region = Rect2(0, 0, 610, 1045)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a4nvv"]
+atlas = ExtResource("15_8u7po")
+region = Rect2(0, 0, 610, 1045)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_5i0lt"]
 animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("3_0e08v")
-}, {
-"duration": 1.0,
-"texture": ExtResource("4_a4nvv")
-}, {
-"duration": 1.0,
-"texture": ExtResource("5_gt2uv")
-}, {
-"duration": 1.0,
-"texture": ExtResource("6_gaeip")
-}, {
-"duration": 1.0,
-"texture": ExtResource("7_3stlj")
-}],
-"loop": true,
-"name": &"Idle",
-"speed": 5.0
-}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("8_3jvo4")
@@ -79,6 +67,42 @@ animations = [{
 "loop": true,
 "name": &"dash",
 "speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0e08v")
+}],
+"loop": true,
+"name": &"fall",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_0e08v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_a4nvv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_gt2uv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_gaeip")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_3stlj")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a4nvv")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -122,19 +146,18 @@ size = Vector2(174, 231)
 
 [node name="CharacterBody2D" type="CharacterBody2D" groups=["Player"]]
 script = ExtResource("1_qc060")
+JumpVelocity = -400.0
 ProjectileScene = ExtResource("2_xxvyq")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.2, 0.2)
 sprite_frames = SubResource("SpriteFrames_5i0lt")
-animation = &"dash"
-autoplay = "Idle"
+animation = &"fall"
+autoplay = "idle"
+frame_progress = 0.9709576
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_fat8n")
-
-[node name="Camera2D" type="Camera2D" parent="."]
-scale = Vector2(0.2, 0.2)
 
 [node name="SwordHitbox" type="Area2D" parent="."]
 position = Vector2(150, -4)
