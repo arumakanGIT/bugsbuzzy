@@ -1,0 +1,54 @@
+[gd_scene load_steps=7 format=3 uid="uid://yicge48108e0"]
+
+[ext_resource type="PackedScene" uid="uid://b1y38crgmyxso" path="res://scenes/back.tscn" id="1_lnu2h"]
+[ext_resource type="PackedScene" uid="uid://be8qbmt0fe144" path="res://scenes/player.tscn" id="1_uwrxv"]
+[ext_resource type="Texture2D" uid="uid://dtxun43cs8m85" path="res://asset/tile set.png" id="1_yqjtg"]
+[ext_resource type="PackedScene" uid="uid://dk3i2c8op0627" path="res://scenes/jumpwithSPACE.tscn" id="4_lbhrr"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lnu2h"]
+texture = ExtResource("1_yqjtg")
+1:1/size_in_atlas = Vector2i(2, 2)
+1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-11.3311, -13.3095455, 15.827566, -12.590111, 15.827566, 0.5395775, 8, 8, -1.2590122, 8, -0.5395756, -3.5971737, -9.352654, -9.172794)
+3:1/size_in_atlas = Vector2i(2, 2)
+3:1/0 = 0
+3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-15.827569, -13.129686, 16.007425, -13.129686, 15.827566, 0.5395775, 12.050533, 3.7770338, 11.51096, 10.611665, 8.273502, 11.870677, 6.115196, 8, 1.0791531, 1.2590113, -2.877739, 5.3957624, -3.956892, 9.89223, -8.45336, 9.89223, -12.76997, 5.935338, -15.64771, -0.5395756)
+5:1/size_in_atlas = Vector2i(2, 2)
+5:1/0 = 0
+5:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-15.827569, -13.129686, 16.007425, -13.129686, 15.827566, 0.5395775, 1.2590122, 5.036044, -15.64771, -0.5395756)
+7:1/size_in_atlas = Vector2i(2, 2)
+7:1/0 = 0
+7:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-15.827569, -13.129686, 16.007425, -13.129686, 15.827566, 0.5395775, 9.712372, 0.8992939, 2.3381634, -2.1583042, -8, 2.5180225, -15.64771, -0.5395756)
+9:1/size_in_atlas = Vector2i(2, 2)
+9:1/0 = 0
+9:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-15.827569, -13.129686, 16.007425, -13.129686, 15.827566, 0.5395775, 9.712372, 0.8992939, 2.3381634, -2.1583042, -8, 2.5180225, -15.64771, -0.5395756)
+
+[sub_resource type="TileSet" id="TileSet_lbhrr"]
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_lnu2h")
+
+[node name="game" type="Node2D"]
+
+[node name="background" parent="." instance=ExtResource("1_lnu2h")]
+position = Vector2(5, -112)
+
+[node name="Sprite2D" parent="." instance=ExtResource("4_lbhrr")]
+position = Vector2(253, -28)
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_lbhrr")
+format = 2
+layer_0/tile_data = PackedInt32Array(131071, 458752, 1, 65536, 458752, 1, 65538, 327680, 1, 65537, 327680, 1, 131070, 196608, 1, 131068, 327680, 1, 65540, 458752, 1, 131066, 458752, 1, 131064, 458752, 1, 131062, 65536, 1, 65542, 327680, 1, 65543, 196608, 1, 65545, 458752, 1, 65547, 589824, 1, -262122, 65536, 1, -262120, 196608, 1, -262118, 327680, 1, -262116, 458752, 1, -262114, 589824, 1, -524255, 65536, 1, -524253, 458752, 1, -524251, 327680, 1, -524249, 327680, 1, -524247, 196608, 1, -524245, 458752, 1, -524244, 327680, 1, -524242, 589824, 1, -983015, 65536, 1, -983013, 327680, 1, -983011, 327680, 1, -983009, 196608, 1, -983007, 458752, 1, -983005, 196608, 1, -983003, 327680, 1, -983001, 458752, 1, -983000, 589824, 1, -786386, 65536, 1, -786384, 458752, 1, -786382, 327680, 1, -786380, 589824, 1, 1376287, 65536, 1, 1376289, 196608, 1, 1376291, 327680, 1, 1376293, 458752, 1, 1376295, 327680, 1, 1376297, 327680, 1, 1376299, 458752, 1, 1376301, 196608, 1, 1376303, 458752, 1, 1376305, 196608, 1, 1376307, 458752, 1, 1376309, 458752, 1, 1376310, 458752, 1, 1376311, 327680, 1, 1376313, 327680, 1, 1376315, 327680, 1, 1376317, 458752, 1, 1376318, 458752, 1)
+
+[node name="player" parent="." instance=ExtResource("1_uwrxv")]
+position = Vector2(-1.9999924, -203)
+
+[node name="Camera2D" type="Camera2D" parent="player"]
+position = Vector2(100.00001, 599.99994)
+scale = Vector2(19.999998, 19.999998)
+zoom = Vector2(1.7, 1.7)
+limit_left = -990
+limit_top = -850
+limit_right = 1005
+limit_bottom = 620
+position_smoothing_enabled = true
