@@ -59,14 +59,10 @@ public partial class Enemy : CharacterBody2D
 
 	private void OnHitBoxBodyEntered(Node body)
 	{
-		
-		if (body.IsInGroup("Player")) 
-		{
 			if (body is player player)
 			{
 				player.TakeDamage(Damage);
 			}
-		}
 	}
 
 	public void TakeDamage(int amount)

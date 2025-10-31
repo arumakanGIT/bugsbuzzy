@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dvuxqwo2taugh"]
+[gd_scene load_steps=10 format=3 uid="uid://dvuxqwo2taugh"]
 
 [ext_resource type="Script" uid="uid://c17l0alcdu8se" path="res://script/Enemy3.cs" id="1_livw7"]
 [ext_resource type="Texture2D" uid="uid://bvqwi1o46okxq" path="res://Asset/enemy3/WingedMonster_0.png" id="2_8qi0x"]
@@ -26,7 +26,7 @@ animations = [{
 "texture": ExtResource("6_40fwe")
 }],
 "loop": true,
-"name": &"default",
+"name": &"walk",
 "speed": 11.0
 }]
 
@@ -34,18 +34,30 @@ animations = [{
 radius = 399.99997
 height = 839.99994
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8qi0x"]
+size = Vector2(1080.0007, 1060.001)
+
 [node name="enemy3" type="CharacterBody2D"]
 scale = Vector2(0.05, 0.05)
+collision_layer = 2
+collision_mask = 2
 script = ExtResource("1_livw7")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-7.6293945e-06, 0)
 scale = Vector2(13, 13)
 sprite_frames = SubResource("SpriteFrames_7bo74")
-autoplay = "default"
-frame = 3
-frame_progress = 0.29134408
+animation = &"walk"
+autoplay = "walk"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1.8189894e-12, -19.999996)
 shape = SubResource("CapsuleShape2D_niaiu")
+
+[node name="HitBox" type="Area2D" parent="."]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+position = Vector2(19.999992, 10.000031)
+scale = Vector2(0.9999989, 0.9999989)
+shape = SubResource("RectangleShape2D_8qi0x")

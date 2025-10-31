@@ -11,7 +11,7 @@ public partial class Enemy3 : CharacterBody2D
 	[Export] public float PatrolRange = 120.0f;    // horizontal patrol radius from start
 	[Export] public float HoverAmplitude = 12.0f;  // vertical hover amount (pixels)
 	[Export] public float HoverSpeed = 2.0f;       // vertical hover speed (radians/sec)
-
+	[Export] public int Health = 50;
 	// Detection / hysteresis
 	[Export] public float ChaseRadius = 160.0f;
 	[Export] public float LoseRadius = 220.0f;     // must be >= ChaseRadius
@@ -24,6 +24,7 @@ public partial class Enemy3 : CharacterBody2D
 	private CharacterBody2D playerNode;
 
 	private float hoverTimer = 0.0f;
+	private Area2D hitBox; 
 
 	private enum State { Patrol, Chase }
 	private State state = State.Patrol;
@@ -46,6 +47,9 @@ public partial class Enemy3 : CharacterBody2D
 			playerNode = null;
 			GD.PrintErr("Enemy3: Player node not found. Make sure the player is in the 'Player' group.");
 		}
+		hitBox = GetNode<Area2D>("HitBox");
+		hitBox.BodyEntered += OnHitBoxBodyEntered;
+
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -141,8 +145,8 @@ public partial class Enemy3 : CharacterBody2D
 			}
 			else
 			{
-				if (!animator.IsPlaying() || animator.Animation != "idle")
-					animator.Play("idle");
+				//if (!animator.IsPlaying() || animator.Animation != "idle")
+					//animator.Play("idle");
 			}
 
 			// flip horizontally according to X direction
@@ -160,4 +164,22 @@ public partial class Enemy3 : CharacterBody2D
 			// apply damage/knockback here
 		}
 	}
+	
+	public void TakeDamage(int amount)
+	{
+		Health-=amount;
+		GD.Print("health: "+Health);
+		if (Health <= 0)
+		{
+			QueueFree();
+		}
+	}
+	private void OnHitBoxBodyEntered(Node body)
+	{
+		if (body is player player)
+		{
+			player.TakeDamage(30);
+		}
+	}
+
 }
