@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://vompy80jcjtj"]
+[gd_scene load_steps=8 format=3 uid="uid://vompy80jcjtj"]
 
-[ext_resource type="PackedScene" path="res://scense/back.tscn" id="1_becb1"]
+[ext_resource type="PackedScene" uid="uid://b1y38crgmyxso" path="res://scense/back.tscn" id="1_becb1"]
 [ext_resource type="Texture2D" uid="uid://bi1gaco3u5jli" path="res://Asset/tile set.png" id="2_qjh6s"]
 [ext_resource type="PackedScene" uid="uid://62javfbvhsfd" path="res://scense/player.tscn" id="3_qjh6s"]
-[ext_resource type="PackedScene" uid="uid://bn7nd5kxmgy40" path="res://scense/ui.tscn" id="4_p65cj"]
+[ext_resource type="PackedScene" path="res://scense/ui.tscn" id="4_p65cj"]
+[ext_resource type="PackedScene" uid="uid://cu380ky37yxyk" path="res://scense/character_body_2d.tscn" id="5_ouhng"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_p65cj"]
 texture = ExtResource("2_qjh6s")
@@ -184,10 +185,13 @@ scale = Vector2(0.2, 0.2)
 position = Vector2(-5, -9.999756)
 scale = Vector2(4.999999, 4.999999)
 zoom = Vector2(2, 2)
-limit_left = -990
-limit_top = -740
-limit_right = 994
-limit_bottom = 740
+limit_left = -987
+limit_top = -737
+limit_right = 997
+limit_bottom = 743
 limit_smoothed = true
 
 [node name="UI" parent="." instance=ExtResource("4_p65cj")]
+
+[node name="CharacterBody2D2" parent="." instance=ExtResource("5_ouhng")]
+position = Vector2(-35, 629)

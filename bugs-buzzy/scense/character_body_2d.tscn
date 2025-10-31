@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://cu380ky37yxyk"]
+
+[ext_resource type="Texture2D" uid="uid://bi1gaco3u5jli" path="res://Asset/tile set.png" id="1_4kkct"]
+[ext_resource type="Script" uid="uid://caqxs2e2r20t1" path="res://script/CharacterBody2d.cs" id="1_f5bgp"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4kkct"]
+atlas = ExtResource("1_4kkct")
+region = Rect2(0, 0, 180, 43)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_f5bgp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4kkct")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h74yr"]
+size = Vector2(154, 29)
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+script = ExtResource("1_f5bgp")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_f5bgp")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2, 4.5)
+shape = SubResource("RectangleShape2D_h74yr")
