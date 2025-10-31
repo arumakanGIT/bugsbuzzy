@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://dk3i2c8op0627"]
+
+[ext_resource type="Texture2D" uid="uid://buivxxj85qc1y" path="res://asset/Jump with SPACE.png" id="1_20bti"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_20bti"]
+size = Vector2(148.5, 40)
+
+[node name="Sprite2D" type="Sprite2D"]
+texture = ExtResource("1_20bti")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.25, 0)
+shape = SubResource("RectangleShape2D_20bti")
