@@ -317,7 +317,7 @@ public partial class player : CharacterBody2D
         }
 
         dashDirection = inputDir.Normalized();
-
+        animator.Play("dash");
         GD.Print("Dash started!");
     }
 
