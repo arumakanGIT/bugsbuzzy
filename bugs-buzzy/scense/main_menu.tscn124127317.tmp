@@ -1,0 +1,58 @@
+[gd_scene load_steps=3 format=3 uid="uid://dus20lknujsv0"]
+
+[ext_resource type="Script" uid="uid://dcyte7gr7rwft" path="res://script/main_menu.gd" id="1_g24xu"]
+[ext_resource type="Texture2D" uid="uid://dwomr0uq54a16" path="res://Asset/mainMenuBackGround.png" id="2_tgh5y"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_g24xu")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 562.0
+offset_top = 84.0
+offset_right = 650.0
+offset_bottom = 204.0
+
+[node name="Main Menu" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Main Menu"
+
+[node name="PlayAsTeamMember" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Play"
+
+[node name="Setting" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Setting"
+
+[node name="ErrorLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="TeamDialog" type="AcceptDialog" parent="VBoxContainer"]
+title = "Team Number:"
+size = Vector2i(400, 100)
+ok_button_text = "close"
+
+[node name="TeamInput" type="LineEdit" parent="VBoxContainer/TeamDialog"]
+offset_right = 68.5625
+offset_bottom = 31.0
+placeholder_text = "Team Number"
+
+[node name="Ok" type="Button" parent="VBoxContainer/TeamDialog"]
+offset_top = 124.0
+offset_right = 88.0
+offset_bottom = 132.0
+
+[node name="TextureRect" type="TextureRect" parent="."]
+z_index = -5
+layout_mode = 0
+offset_left = -336.0
+offset_top = -145.0
+offset_right = 1584.0
+offset_bottom = 755.0
+mouse_filter = 2
+texture = ExtResource("2_tgh5y")

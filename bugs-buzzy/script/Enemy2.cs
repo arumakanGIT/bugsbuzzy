@@ -19,6 +19,8 @@ public partial class Enemy2 : CharacterBody2D
 
 	private AnimatedSprite2D animator;
 	private CharacterBody2D playerNode;
+	private Area2D hitBox; 
+
 
 	private enum State { Patrol, Chase }
 	private State state = State.Patrol;
@@ -32,6 +34,7 @@ public partial class Enemy2 : CharacterBody2D
 
 		// safer player lookup: find first node in group "Player"
 		var players = GetTree().GetNodesInGroup("Player");
+		
 		if (players.Count > 0)
 		{
 			playerNode = players[0] as CharacterBody2D;
@@ -42,6 +45,9 @@ public partial class Enemy2 : CharacterBody2D
 			playerNode = null;
 			GD.PrintErr("Enemy: Player node not found. Make sure the player is in the 'Player' group.");
 		}
+		hitBox = GetNode<Area2D>("HitBox");
+		hitBox.BodyEntered += OnHitBoxBodyEntered;
+
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -141,6 +147,13 @@ public partial class Enemy2 : CharacterBody2D
 		if (Health <= 0)
 		{
 			QueueFree();
+		}
+	}
+	private void OnHitBoxBodyEntered(Node body)
+	{
+		if (body is player player)
+		{
+			player.TakeDamage(10);
 		}
 	}
 }

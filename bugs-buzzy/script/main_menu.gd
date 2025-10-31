@@ -36,9 +36,9 @@ func _on_settings_pressed() -> void:
 func _start_game(team_id: String) -> void:
 	error_label.text = ""
 	print("Starting game with ID:", team_id)
-	# Example:
-	# var game_scene = preload("res://GameScene.tscn")
-	# get_tree().change_scene_to_packed(game_scene)
+	
+	var game_scene = preload("res://scense/game2.tscn")
+	get_tree().change_scene_to_packed(game_scene)
 
 
 func _show_error(message: String) -> void:
