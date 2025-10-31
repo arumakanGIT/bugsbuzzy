@@ -1,8 +1,12 @@
-[gd_scene load_steps=12 format=3 uid="uid://vompy80jcjtj"]
 
-[ext_resource type="PackedScene" path="res://scense/back.tscn" id="1_becb1"]
+
+[gd_scene load_steps=9 format=3 uid="uid://vompy80jcjtj"]
+
+
+[ext_resource type="PackedScene" uid="uid://b1y38crgmyxso" path="res://scense/back.tscn" id="1_becb1"]
 [ext_resource type="Texture2D" uid="uid://bi1gaco3u5jli" path="res://Asset/tile set.png" id="2_qjh6s"]
 [ext_resource type="PackedScene" uid="uid://62javfbvhsfd" path="res://scense/player.tscn" id="3_qjh6s"]
+
 [ext_resource type="PackedScene" uid="uid://bn7nd5kxmgy40" path="res://scense/ui.tscn" id="4_p65cj"]
 [ext_resource type="PackedScene" uid="uid://cw84n5prgiupx" path="res://scense/kill_zone.tscn" id="5_ouhng"]
 [ext_resource type="PackedScene" uid="uid://c2c5nmqqtojtw" path="res://scense/win_zone.tscn" id="6_ysfcl"]
@@ -189,17 +193,18 @@ scale = Vector2(0.2, 0.2)
 position = Vector2(-5, -9.999756)
 scale = Vector2(4.999999, 4.999999)
 zoom = Vector2(2, 2)
-limit_left = -990
-limit_top = -740
-limit_right = 994
-limit_bottom = 740
+limit_left = -987
+limit_top = -737
+limit_right = 997
+limit_bottom = 743
 limit_smoothed = true
 
 [node name="UI" parent="." instance=ExtResource("4_p65cj")]
 
+[node name="CharacterBody2D2" parent="." instance=ExtResource("5_ouhng")]
+position = Vector2(-35, 629)
 [node name="KillZone" parent="." instance=ExtResource("5_ouhng")]
 position = Vector2(-18, 745)
-
 [node name="WinZone" parent="." instance=ExtResource("6_ysfcl")]
 position = Vector2(-447, -643)
 
