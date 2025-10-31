@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://bn7nd5kxmgy40"]
+
+[ext_resource type="Script" uid="uid://wpguxrh8jx4i" path="res://script/Ui.cs" id="1_wfsr0"]
+
+[node name="UI" type="CanvasLayer"]
+script = ExtResource("1_wfsr0")
+
+[node name="HpLabel" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "100"
+
+[node name="SoulLabel" type="Label" parent="."]
+offset_top = 23.0
+offset_right = 40.0
+offset_bottom = 46.0
+text = "0"

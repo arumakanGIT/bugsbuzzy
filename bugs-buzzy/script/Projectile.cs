@@ -28,13 +28,12 @@ public partial class Projectile : Area2D
 
     private void OnBodyEntered(Node body)
     {
-        if (body.IsInGroup("Enemy"))
-        {
+        
             if (body.HasMethod("TakeDamage"))
             {
                 body.Call("TakeDamage", Damage);
             }
-        }
+        
 
         GD.Print(body.Name);
 

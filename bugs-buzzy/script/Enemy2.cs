@@ -7,6 +7,7 @@ public partial class Enemy2 : CharacterBody2D
 {
 	[Export] public float Speed = 100.0f;
 	[Export] public float PatrolRange = 50.0f;
+	[Export] public int Health = 200;
 
 	// detection radii: chase when player is <= ChaseRadius, return to patrol when > LoseRadius
 	[Export] public float ChaseRadius = 150.0f;
@@ -27,7 +28,7 @@ public partial class Enemy2 : CharacterBody2D
 		startPosition = GlobalPosition;
 		targetX = startPosition.X + PatrolRange;
 		animator = GetNodeOrNull<AnimatedSprite2D>("AnimatedSprite2D");
-		animator?.Play("walk");
+		//animator?.Play("walk");
 
 		// safer player lookup: find first node in group "Player"
 		var players = GetTree().GetNodesInGroup("Player");
@@ -131,6 +132,15 @@ public partial class Enemy2 : CharacterBody2D
 		{
 			GD.Print("Player hit!");
 			// handle damage / knockback here
+		}
+	}
+	public void TakeDamage(int amount)
+	{
+		Health-=amount;
+		GD.Print("health: "+Health);
+		if (Health <= 0)
+		{
+			QueueFree();
 		}
 	}
 }
