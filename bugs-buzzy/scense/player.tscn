@@ -148,13 +148,14 @@ size = Vector2(174, 231)
 script = ExtResource("1_qc060")
 JumpVelocity = -400.0
 ProjectileScene = ExtResource("2_xxvyq")
+DashSpeed = 500.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.2, 0.2)
 sprite_frames = SubResource("SpriteFrames_5i0lt")
 animation = &"fall"
 autoplay = "idle"
-frame_progress = 0.9709576
+frame_progress = 0.67998356
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_fat8n")

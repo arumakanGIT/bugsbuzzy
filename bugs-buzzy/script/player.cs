@@ -308,18 +308,27 @@ public partial class player : CharacterBody2D
 		dashTimer = DashDuration;
 		dashCooldownTimer = DashCooldown;
 
-		
 		Vector2 inputDir = Input.GetVector("moveLeft", "moveRight", "moveForward", "moveBackward");
+
+	
 		if (inputDir == Vector2.Zero)
 		{
-			
 			inputDir = new Vector2(animator.FlipH ? -1 : 1, 0);
+		}
+
+		inputDir.Y = 0;
+
+		
+		if (inputDir.X == 0)
+		{
+			inputDir.X = animator.FlipH ? -1 : 1;
 		}
 
 		dashDirection = inputDir.Normalized();
 		animator.Play("dash");
 		GD.Print("Dash started!");
 	}
+
 
 
 }
