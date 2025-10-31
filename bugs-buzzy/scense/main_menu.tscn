@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://dus20lknujsv0"]
+[gd_scene load_steps=3 format=3 uid="uid://dus20lknujsv0"]
 
 [ext_resource type="Script" uid="uid://dcyte7gr7rwft" path="res://script/main_menu.gd" id="1_g24xu"]
+[ext_resource type="Texture2D" uid="uid://dwomr0uq54a16" path="res://Asset/mainMenuBackGround.png" id="2_tgh5y"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -45,3 +46,13 @@ placeholder_text = "Team Number"
 offset_top = 124.0
 offset_right = 88.0
 offset_bottom = 132.0
+
+[node name="TextureRect" type="TextureRect" parent="."]
+z_index = -5
+layout_mode = 0
+offset_left = -336.0
+offset_top = -145.0
+offset_right = 1584.0
+offset_bottom = 755.0
+mouse_filter = 2
+texture = ExtResource("2_tgh5y")

@@ -316,10 +316,10 @@ public partial class player : CharacterBody2D
 			inputDir = new Vector2(animator.FlipH ? -1 : 1, 0);
 		}
 
-		dashDirection = inputDir.Normalized();
-
-		GD.Print("Dash started!");
-	}
+        dashDirection = inputDir.Normalized();
+        animator.Play("dash");
+        GD.Print("Dash started!");
+    }
 
 
 }
