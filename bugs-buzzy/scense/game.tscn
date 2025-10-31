@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bj3xdncx54sar"]
+[gd_scene load_steps=10 format=3 uid="uid://bj3xdncx54sar"]
 
 [ext_resource type="PackedScene" uid="uid://62javfbvhsfd" path="res://scense/player.tscn" id="1_ftc5l"]
 [ext_resource type="PackedScene" uid="uid://xp6i3wwvrq2m" path="res://scense/coin.tscn" id="3_wc2y1"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://d0q2g65ahgok" path="res://Asset/sprites/world_tileset.png" id="4_w8bpv"]
 [ext_resource type="PackedScene" uid="uid://r0j7chy8tc2q" path="res://scense/enemy_2.tscn" id="5_1rj7w"]
 [ext_resource type="PackedScene" uid="uid://dvuxqwo2taugh" path="res://scense/enemy_3.tscn" id="6_1rj7w"]
+[ext_resource type="PackedScene" uid="uid://b2432rsghbdpb" path="res://scense/audio_stream_player.tscn" id="7_xadiw"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xadiw"]
 texture = ExtResource("4_w8bpv")
@@ -139,7 +140,8 @@ texture = ExtResource("4_w8bpv")
 3:15/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_k8jf3"]
-physics_layer_0/collision_layer = 1
+physics_layer_0/collision_layer = 3
+physics_layer_0/collision_mask = 3
 sources/3 = SubResource("TileSetAtlasSource_xadiw")
 
 [node name="game" type="Node2D" groups=["Enemies"]]
@@ -167,3 +169,5 @@ scale = Vector2(0.05, 0.05)
 position = Vector2(-51.999996, -127.99999)
 collision_layer = 2
 collision_mask = 2
+
+[node name="AudioStreamPlayer" parent="." instance=ExtResource("7_xadiw")]
