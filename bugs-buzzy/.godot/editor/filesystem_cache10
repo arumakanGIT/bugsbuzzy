@@ -1,0 +1,10 @@
+63f7b34db8d8cdea90c76aacccf841ec
+::res://::1761893177
+::res://scense/::1761892916
+enemy.tscn::PackedScene::3080373090733909124::1761892915::0::1::::<><><>0<>0<><>::uid://bdekeu8xyl4ig::::res://script/Enemy.cs<>uid://cuytt5u7lgh4k::::res://Asset/AroWalk.png
+game.tscn::PackedScene::3077325388743835777::1761892916::0::1::::<><><>0<>0<><>::uid://62javfbvhsfd::::res://scense/player.tscn<>uid://xp6i3wwvrq2m::::res://scense/coin.tscn<>uid://bj5fka0dnbl4g::::res://scense/enemy.tscn
+player.tscn::PackedScene::2232139915861685725::1761892916::0::1::::<><><>0<>0<><>::uid://cv0m365i5vlnx::::res://script/player.cs<>uid://d6yvidvfy3f1::::res://Asset/AroFall.png<>uid://cuytt5u7lgh4k::::res://Asset/AroWalk.png<>uid://nw627p5joojr::::res://Asset/AroIdle.png<>uid://4p65a7xg3126::::res://Asset/AroJump.png
+::res://script/::1761892916
+Coin.cs::CSharpScript::3534370872649445651::1761892916::0::1::::<><><>0<>0<><>::
+Enemy.cs::CSharpScript::2411048161352694700::1761892916::0::1::::<><><>0<>0<><>::
+player.cs::CSharpScript::6299196808751310213::1761891412::0::1::::<><><>0<>0<><>::
