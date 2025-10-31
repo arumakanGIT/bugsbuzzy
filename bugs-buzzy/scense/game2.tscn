@@ -1,9 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://vompy80jcjtj"]
+[gd_scene load_steps=9 format=3 uid="uid://vompy80jcjtj"]
 
 [ext_resource type="PackedScene" path="res://scense/back.tscn" id="1_becb1"]
 [ext_resource type="Texture2D" uid="uid://bi1gaco3u5jli" path="res://Asset/tile set.png" id="2_qjh6s"]
 [ext_resource type="PackedScene" uid="uid://62javfbvhsfd" path="res://scense/player.tscn" id="3_qjh6s"]
 [ext_resource type="PackedScene" uid="uid://bn7nd5kxmgy40" path="res://scense/ui.tscn" id="4_p65cj"]
+[ext_resource type="PackedScene" uid="uid://cw84n5prgiupx" path="res://scense/kill_zone.tscn" id="5_ouhng"]
+[ext_resource type="PackedScene" uid="uid://c2c5nmqqtojtw" path="res://scense/win_zone.tscn" id="6_ysfcl"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_p65cj"]
 texture = ExtResource("2_qjh6s")
@@ -191,3 +193,9 @@ limit_bottom = 740
 limit_smoothed = true
 
 [node name="UI" parent="." instance=ExtResource("4_p65cj")]
+
+[node name="KillZone" parent="." instance=ExtResource("5_ouhng")]
+position = Vector2(-18, 745)
+
+[node name="WinZone" parent="." instance=ExtResource("6_ysfcl")]
+position = Vector2(-447, -643)
