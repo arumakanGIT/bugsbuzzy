@@ -318,7 +318,7 @@ public partial class player : CharacterBody2D
 
 		inputDir.Y = 0;
 
-		// اگر Y صفر شد، ولی X هم صفر بود، مقدار پیش‌فرض بده
+		
 		if (inputDir.X == 0)
 		{
 			inputDir.X = animator.FlipH ? -1 : 1;
