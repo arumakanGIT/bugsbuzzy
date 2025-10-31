@@ -11,6 +11,7 @@ public partial class Enemy3 : CharacterBody2D
 	[Export] public float DashDuration = 0.25f;
 	[Export] public float DashCooldown = 1.5f;
 	[Export] public float Gravity = 900.0f;
+	[Export] public int Health = 100;
 
 	[Export] public float ChaseRadius = 160.0f;
 	[Export] public float LoseRadius = 220.0f;
@@ -189,4 +190,14 @@ public partial class Enemy3 : CharacterBody2D
 		if (body.IsInGroup("Player"))
 			GD.Print("Enemy4 hit player");
 	}
+	public void TakeDamage(int amount)
+	{
+		Health-=amount;
+		GD.Print("health: "+Health);
+		if (Health <= 0)
+		{
+			QueueFree();
+		}
+	}
+
 }
