@@ -1,192 +1,163 @@
-// Enemy4.cs
+// Enemy3.cs
 using Godot;
 using System;
 using System.Collections.Generic;
 
 public partial class Enemy3 : CharacterBody2D
 {
-	[Export] public float WalkSpeed = 80.0f;
-	[Export] public float ChaseSpeed = 140.0f;
-	[Export] public float DashSpeed = 360.0f;
-	[Export] public float DashDuration = 0.25f;
-	[Export] public float DashCooldown = 1.5f;
-	[Export] public float Gravity = 900.0f;
+	// Movement
+	[Export] public float Speed = 160.0f;          // max movement speed (pixels/sec)
+	[Export] public float Acceleration = 8.0f;     // how quickly velocity approaches target
+	[Export] public float PatrolRange = 120.0f;    // horizontal patrol radius from start
+	[Export] public float HoverAmplitude = 12.0f;  // vertical hover amount (pixels)
+	[Export] public float HoverSpeed = 2.0f;       // vertical hover speed (radians/sec)
 
+	// Detection / hysteresis
 	[Export] public float ChaseRadius = 160.0f;
-	[Export] public float LoseRadius = 220.0f;
-	[Export] public float DashRange = 48.0f;
+	[Export] public float LoseRadius = 220.0f;     // must be >= ChaseRadius
+
+	private Vector2 startPosition;
+	private Vector2 patrolTarget;       // current patrol target x
+	private int patrolDirection = 1;    // 1 => right, -1 => left
 
 	private AnimatedSprite2D animator;
-	private RayCast2D rayGround;
-	private RayCast2D rayWall;
 	private CharacterBody2D playerNode;
 
-	private int direction = -1;
-	private float dashTimer = 0.0f;
-	private float dashCooldownTimer = 0.0f;
+	private float hoverTimer = 0.0f;
 
-	private enum State { Patrol, Chase, Dashing }
+	private enum State { Patrol, Chase }
 	private State state = State.Patrol;
 
 	public override void _Ready()
 	{
+		startPosition = GlobalPosition;
+		patrolTarget = startPosition + new Vector2(PatrolRange, 0);
 		animator = GetNodeOrNull<AnimatedSprite2D>("AnimatedSprite2D");
-		rayGround = GetNodeOrNull<RayCast2D>("RayCastGround");
-		rayWall = GetNodeOrNull<RayCast2D>("RayCastWall");
 
-		if (rayGround != null) rayGround.Enabled = true;
-		if (rayWall != null) rayWall.Enabled = true;
-
+		// safer player lookup: find first node in group "Player"
 		var players = GetTree().GetNodesInGroup("Player");
 		if (players.Count > 0)
+		{
 			playerNode = players[0] as CharacterBody2D;
+			GD.Print($"Enemy3 found player node: {playerNode.Name}");
+		}
 		else
+		{
 			playerNode = null;
-
-		if (animator != null)
-			animator.FlipH = direction < 0;
+			GD.PrintErr("Enemy3: Player node not found. Make sure the player is in the 'Player' group.");
+		}
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
 		float dt = (float)delta;
+		hoverTimer += HoverSpeed * dt;
 
-		// gravity (modify via local copy to avoid CS1612)
-		var v = Velocity;
-		if (!IsOnFloor())
-			v.Y += Gravity * dt;
-		else
-			v.Y = 0;
-		Velocity = v;
-
-		// timers
-		if (dashCooldownTimer > 0) dashCooldownTimer = Mathf.Max(0, dashCooldownTimer - dt);
-		if (dashTimer > 0) dashTimer = Mathf.Max(0, dashTimer - dt);
-
-		// state hysteresis
+		// update state with hysteresis (only if we have a player)
 		if (playerNode != null)
 		{
-			float dist = GlobalPosition.DistanceTo(playerNode.GlobalPosition);
-			if (state == State.Patrol && dist <= ChaseRadius)
+			float distToPlayer = GlobalPosition.DistanceTo(playerNode.GlobalPosition);
+			if (state == State.Patrol && distToPlayer <= ChaseRadius)
 				state = State.Chase;
-			else if (state == State.Chase && dist > LoseRadius)
+			else if (state == State.Chase && distToPlayer > LoseRadius)
+			{
 				state = State.Patrol;
+				// recalc patrol direction based on current position
+				patrolDirection = (GlobalPosition.X < startPosition.X) ? 1 : -1;
+				patrolTarget = startPosition + new Vector2(patrolDirection * PatrolRange, 0);
+			}
 		}
 
-		switch (state)
+		if (state == State.Chase && playerNode != null)
 		{
-			case State.Patrol:
-				DoPatrol(dt);
-				break;
-			case State.Chase:
-				DoChase(dt);
-				break;
-			case State.Dashing:
-				DoDash(dt);
-				break;
+			DoChase(dt);
 		}
-
-		if (animator != null)
-			animator.FlipH = direction < 0;
+		else
+		{
+			DoPatrol(dt);
+		}
 
 		MoveAndSlide();
 	}
 
-	private void DoPatrol(float dt)
-	{
-		bool shouldFlip = false;
-
-		// rayGround and rayWall assume you placed them ahead in the scene
-		if (rayGround != null)
-		{
-			// If the ground-ray is not colliding, it's an edge -> flip
-			if (!rayGround.IsColliding())
-				shouldFlip = true;
-		}
-
-		if (rayWall != null && rayWall.IsColliding())
-			shouldFlip = true;
-
-		if (IsOnWall())
-			shouldFlip = true;
-
-		if (shouldFlip)
-			FlipDirection();
-
-		// compute desired movement and smooth
-		float targetSpeed = WalkSpeed * direction;
-		Vector2 desired = new Vector2(targetSpeed, Velocity.Y);
-		Velocity = Velocity.Lerp(desired, 12.0f * dt);
-
-		animator?.Play("walk");
-	}
-
 	private void DoChase(float dt)
 	{
-		if (playerNode == null)
-		{
-			state = State.Patrol;
-			return;
-		}
-
+		// Move directly towards the player's global position (free 2D flying)
 		Vector2 toPlayer = playerNode.GlobalPosition - GlobalPosition;
-		direction = toPlayer.X < 0 ? -1 : 1;
-
-		if (toPlayer.Length() <= DashRange && dashCooldownTimer <= 0)
+		const float stopDistance = 6.0f;
+		if (toPlayer.Length() <= stopDistance)
 		{
-			StartDash();
+			// close enough: decelerate to stop
+			Velocity = Velocity.Lerp(Vector2.Zero, Acceleration * dt);
+			UpdateAnimation(Vector2.Zero);
 			return;
 		}
 
-		float desiredX = Mathf.Sign(toPlayer.X) * ChaseSpeed;
-		Vector2 desired = new Vector2(desiredX, Velocity.Y);
-		Velocity = Velocity.Lerp(desired, 8.0f * dt);
+		Vector2 desired = toPlayer.Normalized() * Speed;
+		Velocity = Velocity.Lerp(desired, Acceleration * dt);
 
-		animator?.Play("run");
+		UpdateAnimation(desired);
 	}
 
-	private void StartDash()
+	private void DoPatrol(float dt)
 	{
-		state = State.Dashing;
-		dashTimer = DashDuration;
-		dashCooldownTimer = DashCooldown;
-		Velocity = new Vector2(direction * DashSpeed, 0);
-		animator?.Play("dash");
-	}
+		// Horizontal patrol: move toward patrolTarget.X, with vertical hover using sine wave
+		float step = Speed * dt;
+		float currentX = GlobalPosition.X;
+		float distToTargetX = patrolTarget.X - currentX;
 
-	private void DoDash(float dt)
-	{
-		Velocity = Velocity.Lerp(new Vector2(direction * DashSpeed, 0), 20.0f * dt);
-
-		if (dashTimer <= 0 || IsOnWall())
+		// If close enough to target, snap and flip direction
+		if (Mathf.Abs(distToTargetX) <= step)
 		{
-			state = State.Chase;
-			Velocity = new Vector2(direction * WalkSpeed * 0.5f, Velocity.Y);
+			GlobalPosition = new Vector2(patrolTarget.X, GlobalPosition.Y);
+			patrolDirection *= -1;
+			patrolTarget = startPosition + new Vector2(patrolDirection * PatrolRange, 0);
+		}
+
+		// desired horizontal velocity towards target
+		float desiredX = distToTargetX == 0 ? 0 : Mathf.Sign(distToTargetX) * Speed;
+
+		// vertical hovering (offset from start position)
+		float hoverOffset = Mathf.Sin(hoverTimer) * HoverAmplitude;
+		float desiredY = (startPosition.Y + hoverOffset) - GlobalPosition.Y; // desired delta to target hover point
+		// convert desiredY into velocity (clamped)
+		float desiredYVel = Mathf.Clamp(desiredY * 4.0f, -Speed, Speed);
+
+		Vector2 desired = new Vector2(desiredX, desiredYVel);
+		Velocity = Velocity.Lerp(desired, Acceleration * dt);
+
+		UpdateAnimation(desired);
+	}
+
+	private void UpdateAnimation(Vector2 desiredVelocity)
+	{
+		// Optional: play walk/fly animation and flip sprite horizontally based on X
+		if (animator != null)
+		{
+			if (desiredVelocity.Length() > 1.0f)
+			{
+				if (!animator.IsPlaying())
+					animator.Play("walk");
+			}
+			else
+			{
+				if (!animator.IsPlaying() || animator.Animation != "idle")
+					animator.Play("idle");
+			}
+
+			// flip horizontally according to X direction
+			if (desiredVelocity.X != 0)
+				animator.FlipH = desiredVelocity.X < 0;
 		}
 	}
 
-	private void FlipDirection()
-	{
-		direction *= -1;
-
-		// adjust ray target positions (use TargetPosition in Godot 4)
-		if (rayGround != null)
-		{
-			Vector2 tp = rayGround.TargetPosition;
-			tp.X = Mathf.Abs(tp.X) * direction;
-			rayGround.TargetPosition = tp;
-		}
-		if (rayWall != null)
-		{
-			Vector2 tp = rayWall.TargetPosition;
-			tp.X = Mathf.Abs(tp.X) * direction;
-			rayWall.TargetPosition = tp;
-		}
-	}
-
+	// optional: signal handler if you use an Area2D hitbox
 	private void _on_Hitbox_body_entered(Node body)
 	{
 		if (body.IsInGroup("Player"))
-			GD.Print("Enemy4 hit player");
+		{
+			GD.Print("Enemy3 hit the player!");
+			// apply damage/knockback here
+		}
 	}
 }
