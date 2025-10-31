@@ -1,47 +1,38 @@
 [gd_scene load_steps=9 format=3 uid="uid://dvuxqwo2taugh"]
 
 [ext_resource type="Script" uid="uid://c17l0alcdu8se" path="res://script/Enemy3.cs" id="1_livw7"]
-[ext_resource type="Texture2D" uid="uid://nw627p5joojr" path="res://Asset/AroIdle.png" id="2_ncejk"]
+[ext_resource type="Texture2D" uid="uid://bvqwi1o46okxq" path="res://Asset/enemy3/WingedMonster_0.png" id="2_8qi0x"]
+[ext_resource type="Texture2D" uid="uid://dts1jkwwl5f2u" path="res://Asset/enemy3/WingedMonster_1.png" id="3_vqmou"]
+[ext_resource type="Texture2D" uid="uid://cb3b1ymb2j6wx" path="res://Asset/enemy3/WingedMonster_2.png" id="4_lm6gy"]
+[ext_resource type="Texture2D" uid="uid://ul7r76kn6g1e" path="res://Asset/enemy3/WingedMonster_3.png" id="5_bno7k"]
+[ext_resource type="Texture2D" uid="uid://c3sws2lp51asr" path="res://Asset/enemy3/WingedMonster_4.png" id="6_40fwe"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_en1jt"]
-atlas = ExtResource("2_ncejk")
-region = Rect2(0, 0, 833, 1539)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ose0c"]
-atlas = ExtResource("2_ncejk")
-region = Rect2(833, 0, 833, 1539)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4lqmx"]
-atlas = ExtResource("2_ncejk")
-region = Rect2(1666, 0, 833, 1539)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_yf0cf"]
-atlas = ExtResource("2_ncejk")
-region = Rect2(2499, 0, 833, 1539)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_hyotx"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_7bo74"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_en1jt")
+"texture": ExtResource("2_8qi0x")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ose0c")
+"texture": ExtResource("3_vqmou")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_4lqmx")
+"texture": ExtResource("4_lm6gy")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_yf0cf")
+"texture": ExtResource("5_bno7k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_40fwe")
 }],
 "loop": true,
-"name": &"fly",
-"speed": 12.0
+"name": &"default",
+"speed": 11.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_niaiu"]
-radius = 239.99994
-height = 1559.9999
+radius = 399.99997
+height = 839.99994
 
 [node name="enemy3" type="CharacterBody2D"]
 scale = Vector2(0.05, 0.05)
@@ -49,10 +40,12 @@ script = ExtResource("1_livw7")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-7.6293945e-06, 0)
-sprite_frames = SubResource("SpriteFrames_hyotx")
-animation = &"fly"
-autoplay = "fly"
+scale = Vector2(13, 13)
+sprite_frames = SubResource("SpriteFrames_7bo74")
+autoplay = "default"
+frame = 3
+frame_progress = 0.29134408
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(3.0517578e-05, 1.5258789e-05)
+position = Vector2(1.8189894e-12, -19.999996)
 shape = SubResource("CapsuleShape2D_niaiu")

@@ -1,96 +1,34 @@
-[gd_scene load_steps=16 format=3 uid="uid://r0j7chy8tc2q"]
+[gd_scene load_steps=8 format=3 uid="uid://r0j7chy8tc2q"]
 
 [ext_resource type="Script" uid="uid://bj8kyve4rqnv8" path="res://script/Enemy2.cs" id="1_kkrmb"]
-[ext_resource type="Texture2D" uid="uid://cuytt5u7lgh4k" path="res://Asset/AroWalk.png" id="2_jhk1d"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_xgiiq"]
-atlas = ExtResource("2_jhk1d")
-region = Rect2(0, 0, 833, 1546)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ntt4b"]
-atlas = ExtResource("2_jhk1d")
-region = Rect2(833, 0, 833, 1546)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_xj3i5"]
-atlas = ExtResource("2_jhk1d")
-region = Rect2(1666, 0, 833, 1546)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_xu5jo"]
-atlas = ExtResource("2_jhk1d")
-region = Rect2(2499, 0, 833, 1546)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4h72b"]
-atlas = ExtResource("2_jhk1d")
-region = Rect2(3332, 0, 833, 1546)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_xy853"]
-atlas = ExtResource("2_jhk1d")
-region = Rect2(4165, 0, 833, 1546)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_6vp1w"]
-atlas = ExtResource("2_jhk1d")
-region = Rect2(4998, 0, 833, 1546)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_qyys8"]
-atlas = ExtResource("2_jhk1d")
-region = Rect2(5831, 0, 833, 1546)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_l46ij"]
-atlas = ExtResource("2_jhk1d")
-region = Rect2(6664, 0, 833, 1546)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jdrw8"]
-atlas = ExtResource("2_jhk1d")
-region = Rect2(7497, 0, 833, 1546)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_iqmi8"]
-atlas = ExtResource("2_jhk1d")
-region = Rect2(8330, 0, 833, 1546)
+[ext_resource type="Texture2D" uid="uid://r4wnmd6obf1d" path="res://Asset/enemy1/T_EyeBat_0.png" id="2_upr0b"]
+[ext_resource type="Texture2D" uid="uid://1nojcnmaumab" path="res://Asset/enemy1/T_EyeBat_1.png" id="3_vuylc"]
+[ext_resource type="Texture2D" uid="uid://bpg2jsrgb5ojy" path="res://Asset/enemy1/T_EyeBat_2.png" id="4_hal4f"]
+[ext_resource type="Texture2D" uid="uid://djuvv3nxrmjrs" path="res://Asset/enemy1/T_EyeBat_3.png" id="5_hbk4h"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_07a7t"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_xgiiq")
+"texture": ExtResource("2_upr0b")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ntt4b")
+"texture": ExtResource("3_vuylc")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_xj3i5")
+"texture": ExtResource("4_hal4f")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_xu5jo")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_4h72b")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_xy853")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_6vp1w")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_qyys8")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_l46ij")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_jdrw8")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_iqmi8")
+"texture": ExtResource("5_hbk4h")
 }],
 "loop": true,
-"name": &"walk",
-"speed": 12.0
+"name": &"idle",
+"speed": 7.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gtved"]
-radius = 229.99998
-height = 1599.9999
+radius = 499.99994
+height = 999.9999
 
 [node name="enemy2" type="CharacterBody2D"]
 scale = Vector2(0.1, 0.1)
@@ -99,10 +37,11 @@ collision_mask = 2
 script = ExtResource("1_kkrmb")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(16, 16)
 sprite_frames = SubResource("SpriteFrames_07a7t")
-animation = &"walk"
-autoplay = "walk"
+animation = &"idle"
+autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 59.999992)
+position = Vector2(49.999996, -9.999999)
 shape = SubResource("CapsuleShape2D_gtved")
