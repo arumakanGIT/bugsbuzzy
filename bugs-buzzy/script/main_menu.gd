@@ -36,7 +36,9 @@ func _on_settings_pressed() -> void:
 func _start_game(team_id: String) -> void:
 	error_label.text = ""
 	print("Starting game with ID:", team_id)
-	
+
+	GlobalState.setTeamId(team_id)
+
 	var game_scene = preload("res://scense/game2.tscn")
 	get_tree().change_scene_to_packed(game_scene)
 

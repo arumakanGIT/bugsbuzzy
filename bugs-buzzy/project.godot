@@ -11,9 +11,13 @@ config_version=5
 [application]
 
 config/name="BugsBuzzy"
-run/main_scene="uid://bj3xdncx54sar"
+run/main_scene="uid://dus20lknujsv0"
 config/features=PackedStringArray("4.5", "C#", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+GlobalState="*res://scense/global_state.tscn"
 
 [dotnet]
 

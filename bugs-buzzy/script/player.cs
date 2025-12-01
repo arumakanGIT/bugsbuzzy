@@ -19,6 +19,8 @@ public partial class player : CharacterBody2D
 	private float dashTimer = 0f;
 	private float dashCooldownTimer = 0f;
 	private Vector2 dashDirection = Vector2.Zero;
+	private AudioStreamPlayer2D jumpSound;
+
 
 	
 	private AnimatedSprite2D animator;
@@ -38,8 +40,6 @@ public partial class player : CharacterBody2D
 
 	public void TakeDamage(int damage)
 	{
-		if (!isDashing)
-		{
 			Health -= damage;
 			GD.Print("Player took " + damage + " damage! Health = " + Health);
 			ui?.UpdateHP(Health);
@@ -47,7 +47,6 @@ public partial class player : CharacterBody2D
 			{
 				Die();
 			}
-		}
 	}
 
 	private void Die()
@@ -69,6 +68,7 @@ public partial class player : CharacterBody2D
 	{
 		animator = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		swordHitbox = GetNode<Area2D>("SwordHitbox");
+		jumpSound = GetNodeOrNull<AudioStreamPlayer2D>("JumpSound");
 		swordHitbox.Monitoring = false;
 		swordHitbox.BodyEntered += OnSwordHit;
 		ui = GetTree().CurrentScene.GetNodeOrNull<Ui>("UI");
@@ -171,6 +171,7 @@ public partial class player : CharacterBody2D
 			{
 				jumpCounter++;
 				velocity.Y = JumpVelocity;
+				jumpSound?.Play();
 			}
 			else if (IsOnWall())
 			{
@@ -183,6 +184,7 @@ public partial class player : CharacterBody2D
 				jumpCounter = 1;
 
 				wallJumpLockTimer = WallJumpLockDuration;
+				jumpSound?.Play();
 			}
 		}
 

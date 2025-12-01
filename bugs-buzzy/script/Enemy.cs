@@ -5,7 +5,7 @@ public partial class Enemy : CharacterBody2D
 {
 	[Export] public float Speed = 100.0f;
 	[Export] public float PatrolRange = 500.0f;
-	[Export] public int Damage = 10; // مقدار دمیج
+	[Export] public int Damage = 15; // مقدار دمیج
 	[Export] public int Health = 100;
 
 	private Vector2 startPosition;

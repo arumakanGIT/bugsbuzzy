@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://62javfbvhsfd"]
+[gd_scene load_steps=29 format=3 uid="uid://62javfbvhsfd"]
 
 [ext_resource type="Script" uid="uid://cv0m365i5vlnx" path="res://script/player.cs" id="1_qc060"]
 [ext_resource type="PackedScene" uid="uid://6ypqytpth5b0" path="res://scense/projectile.tscn" id="2_xxvyq"]
@@ -22,6 +22,7 @@
 [ext_resource type="Texture2D" uid="uid://bv08lvxb1wu0h" path="res://Asset/asset/Walk/7.png" id="20_vplpc"]
 [ext_resource type="Texture2D" uid="uid://dnyr314ka03xq" path="res://Asset/asset/Walk/8.png" id="21_id7es"]
 [ext_resource type="Texture2D" uid="uid://cgrn73xjm5ljg" path="res://Asset/asset/Walk/9.png" id="22_bknj1"]
+[ext_resource type="AudioStream" uid="uid://dwdso6xon382i" path="res://Asset/music/cartoon-jump-6462.mp3" id="23_a4nvv"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0e08v"]
 atlas = ExtResource("16_58nmf")
@@ -167,3 +168,6 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SwordHitbox"]
 position = Vector2(-1, 4.5)
 shape = SubResource("RectangleShape2D_fat8n")
+
+[node name="JumpSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("23_a4nvv")
